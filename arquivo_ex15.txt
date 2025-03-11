@@ -1,0 +1,24 @@
+-----------------
+Dados do cliente.
+-----------------
+Nome: Murilo
+Email: murilo@outlook.com
+Telefone: 15991237119
+-----------------
+
+-----------------
+Dados do cliente.
+-----------------
+Nome: Maria
+Email: maria@hotmail.com
+Telefone: 15991117119
+-----------------
+
+-----------------
+Dados do cliente.
+-----------------
+Nome: Fernanda
+Email: fernanda@yahoo.com
+Telefone: 15991247119
+-----------------
+
