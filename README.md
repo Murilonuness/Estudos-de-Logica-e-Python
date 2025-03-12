@@ -3,6 +3,18 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+20. Cadastro de Usuários, Busca e Atualização
+Objetivo: Desenvolver um sistema interativo para cadastrar, consultar e atualizar usuários, com validação de entradas e manipulação de arquivos.
+
+Descrição: Este exercício visa a criação de um sistema que permite o cadastro de usuários com informações como nome, e-mail e telefone, com validações de entradas para garantir que os dados estejam corretos. O sistema inclui funcionalidades de consulta de usuários por e-mail, onde o e-mail é utilizado como critério único de busca, garantindo que os dados retornados sejam específicos e sem duplicidade. Além disso, foi implementada a atualização dos dados de um usuário com base no e-mail informado, com a verificação de todos os campos antes de realizar a alteração. O código utiliza manipulação de arquivos para registrar as informações dos usuários em um arquivo .txt, o que possibilita o armazenamento persistente dos dados. O menu interativo proporciona uma navegação simples entre as opções, permitindo a execução das funções de cadastro, consulta e atualização de maneira prática e eficiente.
+
+19. Cadastro de Usuários e Consulta por E-mail
+
+Objetivo: Desenvolver um sistema interativo para cadastro e consulta de usuários, com validação de entradas e manipulação de arquivos.
+
+Descrição: Este exercício tem como foco a criação de um sistema para gerenciar o cadastro de usuários. O sistema permite que o usuário cadastre informações como nome, e-mail e telefone, garantindo que os dados sejam válidos, como a verificação do formato do e-mail e se o telefone contém apenas números. Além disso, oferece funcionalidades para exibir todos os cadastros registrados, buscar um usuário específico pelo e-mail e garantir que os dados sejam salvos corretamente em um arquivo .txt.
+A busca por e-mail foi escolhida como critério de pesquisa, pois, de acordo com a lógica do sistema, um e-mail é único para cada usuário. Isso evita que dados duplicados sejam retornados, o que poderia acontecer se a busca fosse feita pelo nome, caso existissem usuários com o mesmo nome. O menu interativo facilita a navegação entre as opções, proporcionando uma experiência de usuário intuitiva e permitindo a execução de várias operações de cadastro e consulta.
+
 18. Cadastro de Produtos e Consulta de Estoque
 
 Objetivo: Desenvolver um sistema interativo para cadastro e consulta de produtos, com validação de entradas e manipulação de arquivos.

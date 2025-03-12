@@ -16,7 +16,7 @@ def cadastro_produtos(nomeArg, precoArg, quantidadeArg):
         
         with open('arquivo_ex18.txt', 'a', encoding='UTF8') as arquivo:
             arquivo.write(f'Produto: {nome}\nPreço:  {preco}\nQuantidade: {quantidade}\n\n')
-            print(f'Dados cadastrados com sucesso!')
+            print('Dados cadastrados com sucesso!')
     except ValueError:
         print('Erro ao tentar converter dados. Verifique os valores informados.')
 
