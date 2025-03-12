@@ -17,27 +17,30 @@ def attUsuarios(nomeCall, emailCall, telefoneCall):
             return
 
         atualizado = False
+        nome_encontrado = False
 
         with open('arquivo_ex15.txt', 'r', encoding='UTF8') as arquivo:
             dados = arquivo.readlines()
 
         for linhaAtual in range(len(dados)):
             if dados[linhaAtual].strip() == f"Nome: {nome}":
-                if linhaAtual + 1 < len(dados):  
-                    if email:  
-                        dados[linhaAtual + 1] = f"Email: {email}\n"
-                if linhaAtual + 2 < len(dados):  
-                    if telefone:  
-                        dados[linhaAtual + 2] = f"Telefone: {telefone}\n"
-                atualizado = True
-                break
+                nome_encontrado = True
+                if email:  
+                    dados[linhaAtual + 1] = f"Email: {email}\n"
+                    atualizado = True 
+                if telefone:  
+                    dados[linhaAtual + 2] = f"Telefone: {telefone}\n"
+                    atualizado = True
         
-        if atualizado:
-            with open('arquivo_ex15.txt', 'w', encoding='UTF8') as arquivo:
-                arquivo.writelines(dados)
-            print(f'Sucesso: os dados de {nome} foram atualizados!')
+        if nome_encontrado:
+            if atualizado:
+                with open('arquivo_ex15.txt', 'w', encoding='UTF8') as arquivo:
+                    arquivo.writelines(dados)
+                print(f'Sucesso: os dados de {nome} foram atualizados!')
+            else:
+                print('Nenhuma modificação foi realizada nos dados.')
         else:
-            print(f'Erro: Nome não encontrado no banco de dados.')    
+            print('Erro: Nome não encontrado no banco de dados.')   
         
     except FileNotFoundError:
         print('Erro: O arquivo não foi encontrado. Certifique-se de que o cadastro foi feito primeiro.')
@@ -45,5 +48,4 @@ def attUsuarios(nomeCall, emailCall, telefoneCall):
 attUsuarios(
     nomeCall="Digite o nome que quer atualizar: ", 
     emailCall="Digite o novo e-mail (ou deixe em branco para não alterar): ", 
-    telefoneCall="Digite o novo telefone (ou deixe em branco para não alterar): "
-)
+    telefoneCall="Digite o novo telefone (ou deixe em branco para não alterar): ")

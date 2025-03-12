@@ -1,0 +1,28 @@
+Produto: Telefone
+Preço:  5
+Quantidade: 5
+
+Produto: Golf
+Preço:  20.000
+Quantidade: 2
+
+Produto: Civic
+Preço:  60.000
+Quantidade: 1
+
+Produto: Marea
+Preço:  7.000
+Quantidade: 1
+
+Produto: Celta
+Preço:  15.000
+Quantidade: 1
+
+Produto: Fusca
+Preço:  6.000
+Quantidade: 1
+
+Produto: Azera
+Preço:  25.000
+Quantidade: 1
+

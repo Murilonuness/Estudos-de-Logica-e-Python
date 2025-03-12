@@ -2,7 +2,7 @@
 Dados do cliente.
 -----------------
 Nome: Murilo
-Email: murilo@outlook.com
+Email: muriloestudante@gmail.com
 Telefone: 15991237119
 -----------------
 
