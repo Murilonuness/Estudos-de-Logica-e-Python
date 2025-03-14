@@ -3,6 +3,12 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+21. Cadastro de Usuários com Dicionário e E-mail como ID
+
+Objetivo: Desenvolver um sistema interativo para cadastrar usuários, utilizando um dicionário para armazenar os dados e o e-mail como identificador único.
+
+Descrição: O sistema permite o cadastro de usuários com nome, e-mail, telefone e senha, garantindo validações essenciais, como a presença de "@" no e-mail, a exigência de preenchimento de todos os campos e a restrição de números para o telefone. Os dados são armazenados em um dicionário, onde o e-mail é utilizado como chave para evitar duplicações. O sistema oferece um fluxo interativo e intuitivo, permitindo o cadastro contínuo até a saída do usuário.
+
 20. Cadastro de Usuários, Busca e Atualização
 Objetivo: Desenvolver um sistema interativo para cadastrar, consultar e atualizar usuários, com validação de entradas e manipulação de arquivos.
 

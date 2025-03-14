@@ -1,8 +1,6 @@
 Nome: Murilo
 E-mail: murilo@gmail.com
 Telefone: 123Nome: Joao
-E-mail: joao@gmail.com
-Telefone: 123
 
 Nome: Maria
 E-mail: maria@outlook.com
