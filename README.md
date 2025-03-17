@@ -3,6 +3,11 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+22. Cadastro de Usuários com JSON e E-mail como ID
+Objetivo: Criar um sistema interativo para cadastrar usuários, armazenando os dados em um arquivo JSON e utilizando o e-mail como identificador único.
+
+Descrição: O sistema permite o cadastro de usuários com nome, e-mail, telefone e senha, garantindo validações essenciais, como a presença de "@" no e-mail, a exigência de preenchimento de todos os campos e a restrição de números para o telefone. Os dados são armazenados em um arquivo JSON para persistência. O sistema oferece um fluxo interativo e intuitivo, permitindo o cadastro contínuo até a saída do usuário.
+
 21. Cadastro de Usuários com Dicionário e E-mail como ID
 
 Objetivo: Desenvolver um sistema interativo para cadastrar usuários, utilizando um dicionário para armazenar os dados e o e-mail como identificador único.
