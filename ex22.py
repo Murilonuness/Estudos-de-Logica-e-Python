@@ -1,6 +1,6 @@
 import json
 
-ARQUIVO_JSON = "usuarios.json"
+ARQUIVO_JSON = "ex22.json"
 
 def carregar_usuarios():
     try:

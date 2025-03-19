@@ -3,6 +3,17 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+24. Roleta de Comidas
+
+Objetivo: Criar um sistema interativo que auxilia na escolha de refeições por meio de um sorteio entre opções fornecidas pelo usuário.
+
+Descrição: Este projeto consiste em uma roleta digital de comidas, onde o usuário insere até cinco opções e um sorteio aleatório escolhe uma delas. O sistema conta com uma interface baseada no terminal, permitindo que o usuário cadastre suas opções e, ao digitar o comando "sortear", a roleta define a refeição escolhida. Além disso, o programa oferece opções para encerrar ou reiniciar o processo, garantindo uma experiência dinâmica e intuitiva.
+
+23. CRUD de Usuários com JSON
+Objetivo: Implementar um sistema completo de CRUD (Create, Read, Update, Delete) para gerenciar usuários, utilizando um arquivo JSON como banco de dados e o e-mail como identificador único.
+
+Descrição: O sistema permite o cadastro, listagem, atualização e exclusão de usuários, garantindo validações como a verificação de e-mails repetidos, restrição de caracteres para telefone e cidade, e autenticação por senha para ações sensíveis. As informações são armazenadas de forma persistente em um arquivo JSON. O programa oferece um menu interativo para facilitar a navegação e operação do usuário.
+
 22. Cadastro de Usuários com JSON e E-mail como ID
 Objetivo: Criar um sistema interativo para cadastrar usuários, armazenando os dados em um arquivo JSON e utilizando o e-mail como identificador único.
 
