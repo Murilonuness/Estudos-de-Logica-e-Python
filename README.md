@@ -3,6 +3,23 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+28. Roleta de Afazeres com Integração de APIs e Histórico
+Objetivo: Criar um sistema interativo que sorteia afazeres personalizados e atividades de entretenimento, integrando diversas APIs públicas para fornecer sugestões dinâmicas, além de armazenar o histórico das escolhas.
+
+Descrição: Neste exercício, desenvolvi um sistema de roleta que permite ao usuário cadastrar até sete opções de afazeres, incluindo tanto atividades personalizadas quanto categorias predefinidas (como filmes, séries, músicas, animes, livros e pratos). Caso a opção sorteada corresponda a uma dessas categorias, a aplicação faz uma requisição a uma API pública para buscar uma sugestão aleatória dentro do tema. Aprendi a consumir APIs externas usando requests, tratar respostas JSON e estruturar a lógica para apresentar os dados relevantes ao usuário. Além disso, implementei um sistema de armazenamento no MySQL para registrar cada sorteio com data e horário, permitindo a consulta de um histórico. O projeto fortaleceu meu conhecimento sobre manipulação de formulários em Flask, integração com bancos de dados e consumo de APIs para enriquecer a experiência do usuário.
+
+27. Roleta de Entretenimento e Tarefas
+
+Objetivo: Criar um sistema interativo que auxilia na escolha de atividades diárias por meio de um sorteio, incluindo filmes, séries, animes, músicas, livros e pratos aleatórios.
+
+Descrição: Este projeto expande a ideia de uma roleta de afazeres ao integrar APIs para buscar conteúdos aleatórios. O usuário insere até seis opções, podendo incluir atividades personalizadas ou categorias predefinidas (como "Filme", "Série", "Música", etc.). Quando a roleta é girada, se uma das opções corresponder a uma categoria integrada, o programa consulta uma API pública para exibir um resultado aleatório correspondente. Além disso, todas as escolhas são salvas com data e hora em um arquivo de texto, permitindo um histórico das atividades sorteadas.
+
+26. Roleta de Decisões
+
+Objetivo: Criar um sistema interativo que auxilia na escolha de tarefas ou decisões por meio de um sorteio entre opções fornecidas pelo usuário.
+
+Descrição: Este projeto consiste em uma roleta digital onde o usuário pode inserir até oito opções de tarefas, atividades ou decisões. O sistema registra as opções e permite que o usuário gire a roleta digitando "sortear". A escolha aleatória é salva em um arquivo de texto junto com a data e horário do sorteio. Além disso, o programa oferece a possibilidade de reiniciar o processo ou encerrar a sessão, tornando a experiência dinâmica e reutilizável.
+
 24. Roleta de Comidas
 
 Objetivo: Criar um sistema interativo que auxilia na escolha de refeições por meio de um sorteio entre opções fornecidas pelo usuário.

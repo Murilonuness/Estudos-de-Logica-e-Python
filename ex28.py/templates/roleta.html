@@ -1,0 +1,76 @@
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Uma roleta extremamente necessária e funcional para que você possa sortear um de seus afazeres cotidianos.">
+        <title>Roleta</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='roleta.css') }}">
+    </head>
+    <body>
+        <h1>Bem-vindo à Roleta!</h1>
+        <h2>Aqui iremos sortear um dos seus afazeres cotidianos. Assim, você deixará de ser preguiçoso e procrastinador e respeitará nossa decisão.</h2>
+
+        <div class="container">
+            <form action="/" method="POST">
+                <h4>Digite opções de afazer para hoje:</h4>
+                <input type="text" name="afazer1" placeholder="Afazer número um">
+                <input type="text" name="afazer2" placeholder="Afazer número dois">
+                <input type="text" name="afazer3" placeholder="Afazer número três">
+                <input type="text" name="afazer4" placeholder="Afazer número quatro">
+                <input type="text" name="afazer5" placeholder="Afazer número cinco">
+                <input type="text" name="afazer6" placeholder="Afazer número seis">
+                <button type="submit">Sortear</button>
+            </form>
+        
+            <div>
+                <h2>Opções especiais já cadastradas:</h2>
+                <ul>
+                    <li><strong>Filme:</strong> Te daremos um filme aleatório com descrições e sinopse.</li>
+                    <li><strong>Série:</strong> Te daremos uma série aleatória com descrições e sinopse.</li>
+                    <li><strong>Anime:</strong> Te daremos um anime aleatório com descrições e sinopse.</li>
+                    <li><strong>Livro:</strong> Te daremos um livro aleatório com descrições e sinopse.</li>
+                    <li><strong>Prato:</strong> Te daremos um prato de comida aleatório com os ingredientes.</li>
+                    <li><strong>Música:</strong> Te daremos uma música aleatória com cantor, compositor e uma breve descrição.</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            {% if resultado %}
+                <h2>Resultado do Sorteio:</h2>
+                <div class="resultado">
+                    <h3>{{ resultado.tipo }}</h3>
+                    <p><strong>Nome:</strong> {{ resultado.nome }}</p>
+        
+                    {% if resultado.genero %}
+                        <p><strong>Gênero:</strong> {{ resultado.genero }}</p>
+                    {% endif %}
+        
+                    {% if resultado.resumo %}
+                        <p><strong>Resumo:</strong> {{ resultado.resumo }}</p>
+                    {% endif %}
+        
+                    {% if resultado.artista %}
+                        <p><strong>Artista:</strong> {{ resultado.artista }}</p>
+                    {% endif %}
+        
+                    {% if resultado.ingredientes %}
+                        <p><strong>Ingredientes:</strong> {{ ", ".join(resultado.ingredientes) }}</p>
+                    {% endif %}
+        
+                    {% if resultado.autor %}
+                        <p><strong>Autor:</strong> {{ resultado.autor }}</p>
+                    {% endif %}
+        
+                    {% if resultado.instrucao %}
+                        <p><strong>Instruções:</strong> {{ resultado.instrucao }}</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                <h4>Preencha a roleta e descubra seu próximo afazer!</h4>
+            {% endif %}
+        </div>
+        <footer>Você pode aqui ver o histórico dos últimos sorteios: <a href="{{ url_for('historico.mostrar_historico') }}">Histórico</a>
+        </footer>
+    </body>
+    </html>

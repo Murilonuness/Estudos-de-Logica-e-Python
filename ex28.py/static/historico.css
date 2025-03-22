@@ -1,0 +1,25 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 20px;
+    background: linear-gradient(135deg, #aa71ca, #8e24aa);
+}
+
+h1 {
+    color: #f1ebf5;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #d2a4e9;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #d2a4e9;
+}
