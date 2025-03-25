@@ -3,6 +3,11 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+29. Exercício: Par ou Ímpar
+Objetivo: Criar um programa interativo que identifica se um número é par ou ímpar, garantindo entradas válidas e permitindo múltiplas execuções.
+
+Descrição: O sistema solicita um número entre 1 e 10 e informa se ele é par ou ímpar. Para melhorar a experiência do usuário, foram implementadas, uma validação de entrada para evitar erros com valores inválidos, opção de saída ("sair") para interromper o processo, loop interativo para permitir novas tentativas sem reiniciar o programa, mensagens dinâmicas e tempo de espera para tornar a execução mais fluida. O exercício reforçou o uso de condicionais, loops e tratamento de erros em Python.
+
 28. Roleta de Afazeres com Integração de APIs e Histórico
 Objetivo: Criar um sistema interativo que sorteia afazeres personalizados e atividades de entretenimento, integrando diversas APIs públicas para fornecer sugestões dinâmicas, além de armazenar o histórico das escolhas.
 
