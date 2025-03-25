@@ -1,5 +1,19 @@
 import time
 
+def saidaAPP():
+    while True:
+        newTry = input("Deseja descobrir outro número? [s/n]\n").lower()
+
+        if newTry == 's':
+            parOuImpar()
+            break
+        elif newTry == 'n':
+            print('Processo sendo cancelado. Volte sempre!')
+            time.sleep(2)
+            break
+        else:
+            print('Informação inserida fora da solicitação. Tente novamente!')
+
 def parOuImpar():
     while True:
         try:
@@ -18,15 +32,8 @@ def parOuImpar():
                     print("Número digitado é ímpar")
             else:
                 print("Número fora da solicitação. Tente novamente.")
-
-            newTry = input("Deseja descobrir outro número? [s/n]\n").lower()
-
-            if newTry == 's':
-                continue
-            else:
-                print('Processo sendo cancelado. Volte sempre!')
-                time.sleep(2)
-                break
+            saidaAPP()
+            break
         except ValueError:
             print("Certifique-se de digitar um número entre 1 e 10 ou 'sair'.")
 parOuImpar()
