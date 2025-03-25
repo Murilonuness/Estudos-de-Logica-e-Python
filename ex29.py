@@ -1,3 +1,5 @@
+import time
+
 def parOuImpar():
     while True:
         try:
