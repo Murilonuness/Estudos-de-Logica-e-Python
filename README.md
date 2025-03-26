@@ -3,6 +3,12 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+30. Exercício: Cálculo de Fatorial e Fibonacci
+
+Objetivo: Criar um programa interativo que permite ao usuário calcular tanto o fatorial quanto a sequência de Fibonacci de maneira simples e eficiente. O código oferece validação de entradas, tratamento de erros e a opção de realizar múltiplos cálculos sem reiniciar o programa.
+
+Descrição: O sistema solicita ao usuário que escolha entre o cálculo de fatorial ou da sequência de Fibonacci. Após a escolha, o programa solicita a entrada do usuário e executa o cálculo correspondente. Caso o usuário queira realizar outro cálculo, pode optar por continuar, ou sair do programa a qualquer momento. As entradas são validadas para garantir que o usuário forneça números válidos, e o código utiliza tratamento de erros para prevenir falhas. Além disso, o programa inclui mensagens interativas e uma pausa para melhorar a experiência do usuário.
+
 29. Exercício: Par ou Ímpar
 Objetivo: Criar um programa interativo que identifica se um número é par ou ímpar, garantindo entradas válidas e permitindo múltiplas execuções.
 
