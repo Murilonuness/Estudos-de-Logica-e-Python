@@ -15,6 +15,12 @@ Objetivo: Aprender conceitos básicos de Programação Orientada a Objetos (POO)
 
 Descrição: Foi criada a classe Carro com atributos como modelo, cor e velocidade, e métodos para acelerar, frear e exibir o estado atual. O exercício praticou o uso de classes e objetos, permitindo que o código fosse mais organizado e reutilizável. Ao instanciar dois objetos da classe Carro (um Fusca e um Aston Martin), o programa simula a aceleração, a frenagem e a exibição da velocidade dos carros. Além disso, foi garantido que a velocidade não ficasse negativa ao frear. O exercício ajudou a entender a construção de métodos e a interação com objetos em Python.
 
+31. Exercício Calculadora de Tintas para Cômodos com POO
+
+Objetivo: Aprender conceitos básicos de Programação Orientada a Objetos (POO) aplicando-os em uma calculadora de tintas para cômodos, utilizando classes e objetos em Python.
+
+Descrição: Neste exercício, foi criada a classe Comodo para representar um cômodo com atributos como largura, profundidade e altura. A classe Calculadora foi responsável pelos cálculos das áreas das paredes, teto e da litragem necessária de tinta, com base nas dimensões do cômodo. O programa utiliza getters e setters para garantir que os dados inseridos pelo usuário sejam do tipo correto (float), e valida a entrada de dados para evitar erros. O exercício praticou a criação de métodos para calcular as áreas e a litragem necessária, além de reforçar o uso de propriedades (getters e setters) para controle de atributos. O exercício também ajudou a reforçar o conceito de interação entre objetos (como a classe Comodo sendo passada como parâmetro para os métodos da classe Calculadora). Ao final, o programa solicita que o usuário insira as dimensões do cômodo e retorna a área das paredes, a área do teto e a quantidade de tinta necessária para pintar o cômodo.
+
 30. Exercício: Cálculo de Fatorial e Fibonacci
 
 Objetivo: Criar um programa interativo que permite ao usuário calcular tanto o fatorial quanto a sequência de Fibonacci de maneira simples e eficiente. O código oferece validação de entradas, tratamento de erros e a opção de realizar múltiplos cálculos sem reiniciar o programa.
