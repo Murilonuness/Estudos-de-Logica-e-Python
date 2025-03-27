@@ -3,13 +3,25 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+33. Exercício Sistema de Conta Bancária
+
+Objetivo: Criar um sistema de conta bancária simples com depósitos, saques e exibição de saldo, garantindo a validação de entradas e a integridade dos dados.
+
+Descrição: Foi criada a classe ContaBancaria com métodos para depositar, sacar e mostrar saldo. O sistema permite realizar depósitos de valores positivos e saques, com validação para garantir que o valor do saque não seja maior que o saldo disponível. Caso o valor seja inválido, uma mensagem de erro é exibida. O exercício praticou a criação de métodos que interagem com os dados da classe, utilizando validações para garantir que os depósitos e saques sejam realizados corretamente. Além disso, reforçou o uso de atributos de classe e a manipulação de valores numéricos em Python.
+
+32. Exercício Introdução à POO com Carros
+
+Objetivo: Aprender conceitos básicos de Programação Orientada a Objetos (POO) criando e manipulando classes em Python.
+
+Descrição: Foi criada a classe Carro com atributos como modelo, cor e velocidade, e métodos para acelerar, frear e exibir o estado atual. O exercício praticou o uso de classes e objetos, permitindo que o código fosse mais organizado e reutilizável. Ao instanciar dois objetos da classe Carro (um Fusca e um Aston Martin), o programa simula a aceleração, a frenagem e a exibição da velocidade dos carros. Além disso, foi garantido que a velocidade não ficasse negativa ao frear. O exercício ajudou a entender a construção de métodos e a interação com objetos em Python.
+
 30. Exercício: Cálculo de Fatorial e Fibonacci
 
 Objetivo: Criar um programa interativo que permite ao usuário calcular tanto o fatorial quanto a sequência de Fibonacci de maneira simples e eficiente. O código oferece validação de entradas, tratamento de erros e a opção de realizar múltiplos cálculos sem reiniciar o programa.
 
 Descrição: O sistema solicita ao usuário que escolha entre o cálculo de fatorial ou da sequência de Fibonacci. Após a escolha, o programa solicita a entrada do usuário e executa o cálculo correspondente. Caso o usuário queira realizar outro cálculo, pode optar por continuar, ou sair do programa a qualquer momento. As entradas são validadas para garantir que o usuário forneça números válidos, e o código utiliza tratamento de erros para prevenir falhas. Além disso, o programa inclui mensagens interativas e uma pausa para melhorar a experiência do usuário.
 
-29. Exercício: Par ou Ímpar
+29. Exercício Par ou Ímpar
 Objetivo: Criar um programa interativo que identifica se um número é par ou ímpar, garantindo entradas válidas e permitindo múltiplas execuções.
 
 Descrição: O sistema solicita um número entre 1 e 10 e informa se ele é par ou ímpar. Para melhorar a experiência do usuário, foram implementadas, uma validação de entrada para evitar erros com valores inválidos, opção de saída ("sair") para interromper o processo, loop interativo para permitir novas tentativas sem reiniciar o programa, mensagens dinâmicas e tempo de espera para tornar a execução mais fluida. O exercício reforçou o uso de condicionais, loops e tratamento de erros em Python.
