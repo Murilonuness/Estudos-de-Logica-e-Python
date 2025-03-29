@@ -3,6 +3,12 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+34. Exercício de Cálculo de Gasto com Combustível
+
+Objetivo: Criar um sistema que calcula o custo de uma viagem com base na distância e no consumo do veículo.
+
+Descrição: O código é dividido em três arquivos. No veiculo.py, a classe Veiculo armazena o consumo em km/l, garantindo que seja válido com um setter. No combustivel.py, a classe CalculoCombustivel recebe um veículo e uma distância, calcula o consumo total e multiplica pelo preço dos combustíveis (Gasolina, Álcool e Diesel). No main.py, o usuário insere os dados, e os cálculos são exibidos. O exercício reforça conceitos de POO como encapsulamento, getters e setters, além de modularização do código.
+
 33. Exercício Sistema de Conta Bancária
 
 Objetivo: Criar um sistema de conta bancária simples com depósitos, saques e exibição de saldo, garantindo a validação de entradas e a integridade dos dados.
