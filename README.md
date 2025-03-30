@@ -3,6 +3,12 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+35. Exercício de Manipulação de Estado de um Produto
+
+Objetivo: Praticar conceitos básicos de Programação Orientada a Objetos (POO) através da criação de uma classe que gerencia a disponibilidade de um produto em estoque.
+
+Descrição: A classe Marca representa um produto de uma determinada marca e armazena seu estado de disponibilidade. O método alterar_sit modifica esse estado ao simular uma compra. O método exibir_info mostra as informações do produto e sua disponibilidade, enquanto verificar_sit informa se o produto está em estoque. No código principal, uma instância da classe é criada e os métodos são chamados sequencialmente para demonstrar sua funcionalidade. O exercício reforça o uso de atributos, métodos e condicionais dentro de classes, sendo uma introdução à manipulação de estado em POO.
+
 34. Exercício de Cálculo de Gasto com Combustível
 
 Objetivo: Criar um sistema que calcula o custo de uma viagem com base na distância e no consumo do veículo.
