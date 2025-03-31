@@ -3,6 +3,15 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+36. Sistema de Gerenciamento de Estoque com MySQL
+
+Objetivo: Desenvolver um sistema de controle de estoque utilizando Python e MySQL, aplicando conceitos de Programação Orientada a Objetos (POO) para manipulação de dados armazenados em um banco relacional.
+
+Descrição: O sistema consiste em uma classe chamada Historico, responsável por gerenciar um banco de dados MySQL que armazena informações sobre produtos em estoque. A classe estabelece a conexão com o banco e garante a criação da tabela necessária para armazenar os produtos.
+As funcionalidades do sistema incluem o cadastro de novos produtos, permitindo armazenar informações como nome, preço, marca, peso, quantidade e categoria. Além disso, é possível atualizar atributos dos produtos, como o preço, o peso e a quantidade em estoque. O sistema também oferece métodos para remover uma quantidade específica de um produto ou excluí-lo completamente do banco de dados.
+Para facilitar a consulta, o sistema permite buscar produtos por ID e listar todos os itens cadastrados no estoque. Os dados são recuperados diretamente do banco de dados e exibidos de maneira organizada, proporcionando clareza na visualização das informações.
+Esse projeto reforça o uso da Programação Orientada a Objetos ao organizar o código em métodos especializados, promovendo um desenvolvimento modular e reutilizável. Além disso, a integração com MySQL demonstra a importância do armazenamento e manipulação de dados em sistemas reais, sendo um exercício prático para a criação de aplicações empresariais.
+
 35. Exercício de Manipulação de Estado de um Produto
 
 Objetivo: Praticar conceitos básicos de Programação Orientada a Objetos (POO) através da criação de uma classe que gerencia a disponibilidade de um produto em estoque.
