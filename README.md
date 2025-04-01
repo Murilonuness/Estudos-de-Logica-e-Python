@@ -7,10 +7,9 @@ Exercícios:
 
 Objetivo: Desenvolver um sistema de controle de estoque utilizando Python e MySQL, aplicando conceitos de Programação Orientada a Objetos (POO) para manipulação de dados armazenados em um banco relacional.
 
-Descrição: O sistema consiste em uma classe chamada Historico, responsável por gerenciar um banco de dados MySQL que armazena informações sobre produtos em estoque. A classe estabelece a conexão com o banco e garante a criação da tabela necessária para armazenar os produtos.
-As funcionalidades do sistema incluem o cadastro de novos produtos, permitindo armazenar informações como nome, preço, marca, peso, quantidade e categoria. Além disso, é possível atualizar atributos dos produtos, como o preço, o peso e a quantidade em estoque. O sistema também oferece métodos para remover uma quantidade específica de um produto ou excluí-lo completamente do banco de dados.
-Para facilitar a consulta, o sistema permite buscar produtos por ID e listar todos os itens cadastrados no estoque. Os dados são recuperados diretamente do banco de dados e exibidos de maneira organizada, proporcionando clareza na visualização das informações.
-Esse projeto reforça o uso da Programação Orientada a Objetos ao organizar o código em métodos especializados, promovendo um desenvolvimento modular e reutilizável. Além disso, a integração com MySQL demonstra a importância do armazenamento e manipulação de dados em sistemas reais, sendo um exercício prático para a criação de aplicações empresariais.
+Descrição: O sistema, implementado na classe Estoque, gerencia um banco de dados MySQL que armazena informações de produtos. Ele permite o cadastro de novos itens, incluindo nome, preço, marca, peso, quantidade e categoria. Também oferece métodos para atualizar atributos, remover uma quantidade específica ou excluir produtos do banco.
+Para consulta, é possível buscar produtos por ID ou listar todos os itens cadastrados. Além disso, um sistema de dashboard baseado em dicionários organiza estatísticas sobre os produtos, como distribuição por nome, marca e categoria. Embora atualmente funcione apenas no backend, ele pode ser facilmente integrado a um frontend futuramente.
+Este projeto reforça o uso da POO ao estruturar o código de forma modular e reutilizável. A integração com MySQL demonstra a importância do armazenamento e manipulação de dados em sistemas reais, sendo uma aplicação prática para controle de estoque empresarial.   
 
 35. Exercício de Manipulação de Estado de um Produto
 
