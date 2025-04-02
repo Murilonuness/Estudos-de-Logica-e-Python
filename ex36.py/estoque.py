@@ -48,6 +48,7 @@ class Estoque:
         """)
         self.conn.commit()
         cursor.close()
+        print("Tabela historico_estoque recriada com sucesso!")
 
     def adc_produto(self, produto, preco, marca, peso, quantidade, categoria):
         if not self.conn:
@@ -135,6 +136,8 @@ class Estoque:
     def excluir_produto(self, produto_id):
         cursor = self.conn.cursor()
 
+        cursor.execute("SET foreign_key_checks = 0;")
+
         cursor.execute("SELECT produto, preco, peso, quantidade, categoria FROM estoque WHERE id = %s", (produto_id,))
         produto_info = cursor.fetchone()
 
@@ -163,6 +166,7 @@ class Estoque:
         except mysql.connector.Error as err:
             print(f"Erro ao excluir produto: {err}")
 
+        cursor.execute("SET foreign_key_checks = 1;")
         cursor.close()
 
     def listar_todos_produtos(self):
@@ -213,7 +217,7 @@ class Estoque:
         if peso_novo is None: peso_novo = peso_antigo
 
         cursor.execute("""
-            INSERT INTO historico_estoque 
+            INSERT INTO historico_estoque
             (produto_id, acao, quantidade_antiga, quantidade_nova, preco_antigo, preco_novo, peso_antigo, peso_novo) 
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """, (produto_id, acao, quantidade_antiga, quantidade_nova, preco_antigo, preco_novo, peso_antigo, peso_novo))
