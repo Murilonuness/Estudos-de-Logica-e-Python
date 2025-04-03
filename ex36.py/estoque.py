@@ -212,18 +212,23 @@ class Estoque:
                             preco_antigo=None, preco_novo=None, peso_antigo=None, peso_novo=None):
         cursor = self.conn.cursor()
 
-        if quantidade_nova is None: quantidade_nova = quantidade_antiga
-        if preco_novo is None: preco_novo = preco_antigo
-        if peso_novo is None: peso_novo = peso_antigo
+        try:
+            if quantidade_nova is None: quantidade_nova = quantidade_antiga
+            if preco_novo is None: preco_novo = preco_antigo
+            if peso_novo is None: peso_novo = peso_antigo
 
-        cursor.execute("""
-            INSERT INTO historico_estoque
-            (produto_id, acao, quantidade_antiga, quantidade_nova, preco_antigo, preco_novo, peso_antigo, peso_novo) 
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """, (produto_id, acao, quantidade_antiga, quantidade_nova, preco_antigo, preco_novo, peso_antigo, peso_novo))
+            cursor.execute("""
+                INSERT INTO historico_estoque
+                (produto_id, acao, quantidade_antiga, quantidade_nova, preco_antigo, preco_novo, peso_antigo, peso_novo) 
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (produto_id, acao, quantidade_antiga, quantidade_nova, preco_antigo, preco_novo, peso_antigo, peso_novo))
 
-        self.conn.commit()
-        cursor.close()
+            self.conn.commit()
+        except Exception as e:
+            self.conn.rollback()
+            print(f"Erro ao registrar histórico: {e}")
+        finally:
+            cursor.close()
 
     def listar_historico(self):
         cursor = self.conn.cursor()

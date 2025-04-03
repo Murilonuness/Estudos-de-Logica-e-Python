@@ -27,7 +27,11 @@ def menu_usuarios():
     print("\n--- Menu de Usuários ---")
     print("1. Cadastrar Usuário")
     print("2. Listar Usuários")
-    print("3. Voltar ao Menu Principal")
+    print("3. Atualizar Usuário")
+    print("4. Deletar Usuário")
+    print("5. Buscar Usuário por Nome")
+    print("6. Login")
+    print("7. Voltar ao Menu Principal")
 
 def main():
     estoque = Estoque("estoque_db")
@@ -46,20 +50,56 @@ def main():
         if escolha_principal == '1':
             while True:
                 menu_usuarios()
-                escolha_usuario = input("Escolha uma opção (1-3): ")
+                escolha_usuario = input("Escolha uma opção (1-7): ")
                 
                 if escolha_usuario == '1':
                     nome = input("Nome: ")
                     telefone = input("Telefone: ")
                     cidade = input("Cidade: ")
-                    sexo = input("Sexo: ")
+                    sexo = input("Sexo (M/F/Outro): ")
                     segundo_nome = input("Segundo Nome: ")
                     email = input("Email: ")
                     senha = input("Senha: ")
                     user_manager.create_user(nome, telefone, cidade, sexo, segundo_nome, email, senha)
+
                 elif escolha_usuario == '2':
-                    user_manager.read_users()
+                    usuarios = user_manager.read_users()
+                    if usuarios:
+                        for usuario in usuarios:
+                            print(usuario)
+                    else:
+                        print("Nenhum usuário encontrado.")
+
                 elif escolha_usuario == '3':
+                    user_id = input("Digite o ID do usuário a ser atualizado: ")
+                    nome = input("Novo nome (ou deixe em branco): ")
+                    telefone = input("Novo telefone (ou deixe em branco): ")
+                    cidade = input("Nova cidade (ou deixe em branco): ")
+                    sexo = input("Novo sexo (ou deixe em branco): ")
+                    segundo_nome = input("Novo segundo nome (ou deixe em branco): ")
+                    email = input("Novo email (ou deixe em branco): ")
+                    senha = input("Nova senha (ou deixe em branco): ")
+                    user_manager.update_user(user_id, nome or None, telefone or None, cidade or None, sexo or None, segundo_nome or None, email or None, senha or None)
+
+                elif escolha_usuario == '4':
+                    user_id = input("Digite o ID do usuário a ser deletado: ")
+                    user_manager.delete_user(user_id)
+
+                elif escolha_usuario == '5':
+                    nome = input("Digite o nome para buscar: ")
+                    usuarios = user_manager.search_by_name(nome)
+                    if usuarios:
+                        for usuario in usuarios:
+                            print(usuario)
+                    else:
+                        print("Nenhum usuário encontrado com esse nome.")
+
+                elif escolha_usuario == '6':
+                    email = input("Email: ")
+                    senha = input("Senha: ")
+                    user_manager.login(email, senha)
+
+                elif escolha_usuario == '7':
                     break
                 else:
                     print("Opção inválida. Tente novamente.")
@@ -117,11 +157,13 @@ def main():
                 menu_compras()
                 escolha_compras = input("Escolha uma opção (1-4): ")
                 if escolha_compras == '1':
+                    usuario_id = int(input("ID do Usuário que está comprando: "))
                     produto_id = int(input("ID do Produto a ser comprado: "))
                     quantidade = int(input("Quantidade de produto: "))
                     preco_unitario = float(input("Preço Unitário do Produto: "))
+
                     if compras.verificar_estoque(produto_id, quantidade):
-                        compras.registrar_compra(produto_id, quantidade, preco_unitario)
+                        compras.registrar_compra(usuario_id, produto_id, quantidade, preco_unitario)
                         print("Compra registrada com sucesso!")
                     else:
                         print("Estoque insuficiente para a quantidade solicitada. Tente uma quantidade menor.")
@@ -129,7 +171,7 @@ def main():
                     produto_id = int(input("ID do Produto (ou 0 para todas as compras): "))
                     data_inicio = input("Data de Início (YYYY-MM-DD): ")
                     data_fim = input("Data de Fim (YYYY-MM-DD): ")
-                    compras.registrar_compra(usuario_id, produto_id, quantidade, preco_unitario)
+                    compras_realizadas = compras.consultar_compras(produto_id, data_inicio, data_fim)
                     print(f"\nCompras realizadas: {compras_realizadas}")
                 elif escolha_compras == '3':
                     estatisticas = compras.estatisticas_compras()

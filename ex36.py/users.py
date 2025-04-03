@@ -8,10 +8,25 @@ class User:
             'password': '',
             'database': db_name
         }
-        self.conn = mysql.connector.connect(**self.db_config)
-        self.cursor = self.conn.cursor()
+        try:
+            self.conn = mysql.connector.connect(**self.db_config)
+            self.cursor = self.conn.cursor()
+        except mysql.connector.Error as err:
+            print(f"Erro ao conectar ao banco de dados: {err}")
 
     def create_user(self, nome, telefone, cidade, sexo, segundo_nome, email, senha):
+        print(f"Tentando criar usuário: {nome}, {telefone}, {cidade}, {sexo}, {segundo_nome}, {email}")
+        if not self.validar_inputs(nome, telefone, cidade, sexo, segundo_nome, email, senha):
+            return
+
+        if self.email_exists(email):
+            print("Erro: Este e-mail já está cadastrado.")
+            return
+        
+        if self.telefone_exists(telefone):
+            print("Erro: Este telefone já está cadastrado.")
+            return
+
         sql = """
         INSERT INTO users (nome, telefone, cidade, sexo, segundoNome, email, senha)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
@@ -19,39 +34,59 @@ class User:
         try:
             self.cursor.execute(sql, (nome, telefone, cidade, sexo, segundo_nome, email, senha))
             self.conn.commit()
+            self.conn.commit()
+            print("Commit executado!")
+
             print("Usuário cadastrado com sucesso!")
         except mysql.connector.Error as err:
-            print(f"Erro ao cadastrar usuário: {err}")
+            print(f"Erro ao inserir usuário: {err}")
 
     def read_users(self):
         self.cursor.execute("SELECT id, nome, telefone, cidade, sexo, segundoNome, email FROM users")
-        for user in self.cursor.fetchall():
-            print(user)
+        return self.cursor.fetchall()
 
-    def update_user(self, user_id, nome=None, telefone=None, cidade=None):
+    def get_user_by_id(self, user_id):
+        self.cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+        return self.cursor.fetchone()
+
+    def update_user(self, user_id, nome=None, telefone=None, cidade=None, sexo=None, segundo_nome=None, email=None, senha=None):
         sql = "UPDATE users SET "
         values = []
-        
+
         if nome:
             sql += "nome = %s, "
             values.append(nome)
         if telefone:
+            if self.telefone_exists(telefone):
+                print("Erro: Este telefone já está cadastrado para outro usuário.")
+                return
             sql += "telefone = %s, "
             values.append(telefone)
         if cidade:
             sql += "cidade = %s, "
             values.append(cidade)
-        
-        sql = sql.rstrip(", ")
-        sql += " WHERE id = %s"
-        values.append(user_id)
-        
-        try:
+        if sexo:
+            sql += "sexo = %s, "
+            values.append(sexo)
+        if segundo_nome:
+            sql += "segundoNome = %s, "
+            values.append(segundo_nome)
+        if email:
+            if self.email_exists(email):
+                print("Erro: Este e-mail já está cadastrado para outro usuário.")
+                return
+            sql += "email = %s, "
+            values.append(email)
+        if senha:
+            sql += "senha = %s, "
+            values.append(senha)
+
+        if values:
+            sql = sql.rstrip(", ") + " WHERE id = %s"
+            values.append(user_id)
             self.cursor.execute(sql, values)
             self.conn.commit()
-            print("Usuário atualizado!")
-        except mysql.connector.Error as err:
-            print(f"Erro ao atualizar usuário: {err}")
+            print("Usuário atualizado com sucesso!")
 
     def delete_user(self, user_id):
         try:
@@ -61,16 +96,55 @@ class User:
         except mysql.connector.Error as err:
             print(f"Erro ao deletar usuário: {err}")
 
-    def get_user_by_id(self, user_id):
-        self.cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
-        return self.cursor.fetchone()
-    
+    def email_exists(self, email):
+        self.cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
+        return self.cursor.fetchone() is not None
+
+    def telefone_exists(self, telefone):
+        self.cursor.execute("SELECT id FROM users WHERE telefone = %s", (telefone,))
+        return self.cursor.fetchone() is not None
+
+    def login(self, email, senha):
+        self.cursor.execute("SELECT id, nome FROM users WHERE email = %s AND senha = %s", (email, senha))
+        user = self.cursor.fetchone()
+        if user:
+            print(f"Bem-vindo, {user[1]}!")
+            return user
+        else:
+            print("Email ou senha incorretos.")
+            return None
+
+    def search_by_name(self, nome):
+        self.cursor.execute("SELECT id, nome, telefone, cidade, email FROM users WHERE nome LIKE %s", (f"%{nome}%",))
+        return self.cursor.fetchall()
+
+    def validar_inputs(self, nome, telefone, cidade, sexo, segundo_nome, email, senha):
+        if not isinstance(nome, str) or len(nome) < 2:
+            print("Erro: Nome deve ser um texto com pelo menos 2 caracteres.")
+            return False
+        if not telefone.isdigit() or len(telefone) < 9:
+            print("Erro: Telefone deve conter apenas números e ter pelo menos 9 dígitos.")
+            return False
+        if not isinstance(cidade, str) or len(cidade) < 2:
+            print("Erro: Cidade deve ser um texto válido.")
+            return False
+        if sexo not in ["M", "F", "Outro"]:
+            print("Erro: Sexo deve ser 'M', 'F' ou 'Outro'.")
+            return False
+        if not isinstance(segundo_nome, str) or len(segundo_nome) < 2:
+            print("Erro: Segundo nome deve ser um texto com pelo menos 2 caracteres.")
+            return False
+        if "@" not in email or "." not in email:
+            print("Erro: Email inválido.")
+            return False
+        if len(senha) < 6:
+            print("Erro: A senha deve ter pelo menos 6 caracteres.")
+            return False
+        return True
+
     def close_connection(self):
         self.cursor.close()
         self.conn.close()
 
-if __name__ == "__main__":
-    user_manager = User("estoque_db")
-    user_manager.create_user("João", "11999999999", "São Paulo", "M", "Silva", "joao@email.com", "senha123")
-    user_manager.read_users()
-    user_manager.close_connection()
+    def __del__(self):
+        self.close_connection()

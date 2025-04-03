@@ -3,15 +3,16 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
-36. Sistema de Gerenciamento de Estoque e Compras com MySQL
+36. Sistema de Gerenciamento de Estoque, Compras e Usuários com MySQL
 
 Objetivo:
-Desenvolver um sistema de controle de estoque e compras utilizando Python e MySQL, aplicando conceitos de Programação Orientada a Objetos (POO) para manipulação de dados em um banco relacional.
+Desenvolver um sistema de controle de estoque, compras e usuários utilizando Python e MySQL, aplicando conceitos de Programação Orientada a Objetos (POO) para manipulação de dados em um banco relacional.
 
 Descrição:
-O sistema, implementado nas classes Estoque e Compras, gerencia um banco de dados MySQL que armazena informações de produtos e transações de compras. Ele permite o cadastro de produtos, incluindo nome, preço, marca, peso, quantidade e categoria. Além disso, oferece funcionalidades para atualizar a quantidade de produtos, seja por ID ou nome, excluir produtos ou remover uma quantidade específica, consultar produtos por ID e listar todos os itens cadastrados. O sistema também gera estatísticas detalhadas de estoque, como a quantidade total e a distribuição por nome, marca e categoria, e mantém um histórico de edições para rastrear alterações ao longo do tempo.
-Na parte de compras, o sistema registra compras verificando a disponibilidade de estoque antes de permitir a transação, garantindo que não haja compras em excesso. Também é possível consultar compras realizadas com base em parâmetros como data e ID do produto, além de exibir estatísticas como o total gasto por mês e o produto mais comprado.
-Esse sistema demonstra a importância de um controle integrado de estoque e compras para a gestão empresarial, sendo modular e reutilizável.
+O sistema gerencia um banco de dados MySQL que armazena informações de produtos, compras e usuários. Ele permite o cadastro de produtos, incluindo nome, preço, marca, peso, quantidade e categoria, além de funcionalidades para atualizar, excluir e consultar produtos, listar todos os itens cadastrados e gerar estatísticas detalhadas sobre o estoque. Um histórico de edições é mantido para rastrear alterações.
+Na parte de compras, o sistema registra transações verificando a disponibilidade do estoque antes da confirmação. Agora, as compras são associadas diretamente ao ID do usuário, permitindo que cada usuário visualize seu histórico de compras. Estatísticas como total gasto por mês e produto mais comprado também são disponibilizadas.
+Foi adicionado um CRUD de usuários com validações, possibilitando cadastro, atualização, exclusão e busca por nome. Com a funcionalidade de login, os usuários podem acessar a loja, visualizar todos os produtos e registrar compras autenticadas, garantindo um controle mais eficiente e organizado.
+Esse sistema modular e reutilizável aprimora o controle de estoque e compras, permitindo uma melhor gestão empresarial e personalização para cada usuário.
 
 35. Exercício de Manipulação de Estado de um Produto
 
