@@ -10,7 +10,7 @@ Desenvolver um sistema de controle de estoque, compras e usuários utilizando Py
 
 Descrição:
 O sistema gerencia um banco de dados MySQL que armazena informações de produtos, compras e usuários. Ele permite o cadastro de produtos, incluindo nome, preço, marca, peso, quantidade e categoria, além de funcionalidades para atualizar, excluir e consultar produtos, listar todos os itens cadastrados e gerar estatísticas detalhadas sobre o estoque. Um histórico de edições é mantido para rastrear alterações.
-Na parte de compras, o sistema registra transações verificando a disponibilidade do estoque antes da confirmação. Agora, as compras são associadas diretamente ao ID do usuário, permitindo que cada usuário visualize seu histórico de compras. Estatísticas como total gasto por mês e produto mais comprado também são disponibilizadas.
+Na parte de compras, o sistema registra transações verificando a disponibilidade do estoque antes da confirmação. Agora, as compras são associadas diretamente ao ID do usuário, permitindo que cada compra seja associada a um usuário. Estatísticas como total gasto por mês pelos clientes e produto mais comprado também pelos clientes são disponibilizadao.
 Foi adicionado um CRUD de usuários com validações, possibilitando cadastro, atualização, exclusão e busca por nome. Com a funcionalidade de login, os usuários podem acessar a loja, visualizar todos os produtos e registrar compras autenticadas, garantindo um controle mais eficiente e organizado.
 Esse sistema modular e reutilizável aprimora o controle de estoque e compras, permitindo uma melhor gestão empresarial e personalização para cada usuário.
 
