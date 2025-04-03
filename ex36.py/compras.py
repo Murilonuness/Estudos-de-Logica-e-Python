@@ -50,29 +50,25 @@ class Compras:
         else:
             return False
 
-    def registrar_compra(self, produto_id, quantidade, preco_unitario):
+    def registrar_compra(self, usuario_id, produto_id, quantidade, preco_unitario):
         if self.verificar_estoque(produto_id, quantidade):
-
             preco_total = quantidade * preco_unitario
 
-            cursor = self.conn.cursor()
-            cursor.execute("""
-                INSERT INTO compras (produto_id, quantidade, preco_total, data_compra)
-                VALUES (%s, %s, %s, NOW())
-            """, (produto_id, quantidade, preco_total))
+            self.cursor.execute("""
+                INSERT INTO compras (usuario_id, produto_id, quantidade, preco_total, data_compra)
+                VALUES (%s, %s, %s, %s, NOW())
+            """, (usuario_id, produto_id, quantidade, preco_total))
 
-            nova_quantidade = self.consultar_quantidade(produto_id) - quantidade
-            cursor.execute("""
+            self.cursor.execute("""
                 UPDATE estoque
-                SET quantidade = %s
+                SET quantidade = quantidade - %s
                 WHERE id = %s
-            """, (nova_quantidade, produto_id))
+            """, (quantidade, produto_id))
 
             self.conn.commit()
-            cursor.close()
-            print("Compra registrada e estoque atualizado com sucesso!")
+            print("Compra registrada com sucesso!")
         else:
-            print("Estoque insuficiente para a quantidade solicitada. Tente uma quantidade menor.")
+            print("Estoque insuficiente.")
 
     def consultar_quantidade(self, produto_id):
         if self.conn:
