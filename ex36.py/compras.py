@@ -28,7 +28,7 @@ class Compras:
         if self.conn:
             self.conn.close()
             self.conn = None
-            print("Conexão com o banco de dados encerrada.")
+            print("Conexão com o banco de compras encerrada.")
 
     def criar_tabela_compras(self):
         cursor = self.conn.cursor()
@@ -72,9 +72,20 @@ class Compras:
 
                 quantidade_nova = quantidade_antiga - quantidade
 
-                self.estoque.registrar_historico(produto_id, acao="Compra", 
-                                                 quantidade_antiga=quantidade_antiga, 
-                                                 quantidade_nova=quantidade_nova)
+                cursor.execute("SELECT produto FROM estoque WHERE id = %s", (produto_id,))
+                resultado = cursor.fetchone()
+                if resultado:
+                    produto_nome = resultado[0]
+                else:
+                    raise Exception("Produto não encontrado para registrar histórico")
+
+                self.estoque.registrar_historico(
+                    produto_id,
+                    produto_nome,
+                    acao="Compra",
+                    quantidade_antiga=quantidade_antiga,
+                    quantidade_nova=quantidade_nova
+                )
 
                 self.conn.commit()
                 print("Compra registrada com sucesso!")
@@ -83,8 +94,7 @@ class Compras:
                 self.conn.rollback()
                 print(f"Erro na compra: {e}")
             finally:
-                cursor.close()  # ✅ Fechando o cursor sempre
-
+                cursor.close()
 
     def consultar_quantidade(self, produto_id):
         cursor = self.conn.cursor()
