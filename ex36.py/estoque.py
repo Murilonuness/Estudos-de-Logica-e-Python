@@ -50,6 +50,30 @@ class Estoque:
             cursor.close()
             print("Tabela historico_estoque recriada com sucesso!")
 
+    def verificar_estoque(self, produto_id, quantidade_comprada):
+        estoque_atual = self.consultar_quantidade(produto_id)
+        return estoque_atual >= quantidade_comprada
+
+    def consultar_quantidade(self, produto_id):
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT quantidade FROM estoque WHERE id = %s", (produto_id,))
+        resultado = cursor.fetchone()
+        cursor.close()
+        return resultado[0] if resultado else 0
+    
+    def consultar_preco(self, produto_id):
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT preco FROM estoque WHERE id = %s", (produto_id,))
+        resultado = cursor.fetchone()
+        cursor.close()
+        return resultado[0] if resultado else 0.0
+    
+    def atualizar_quantidade(self, produto_id, quantidade_alterada):
+        cursor = self.conn.cursor()
+        cursor.execute("UPDATE estoque SET quantidade = quantidade + %s WHERE id = %s", (quantidade_alterada, produto_id))
+        self.conn.commit()
+        cursor.close()
+
     def adc_produto(self, produto, preco, marca, peso, quantidade, categoria):
         if not self.conn:
             print("Erro: Sem conexão com o banco de dados.")

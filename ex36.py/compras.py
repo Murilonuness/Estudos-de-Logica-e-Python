@@ -1,6 +1,6 @@
 from estoque import Estoque
 import mysql.connector
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class Compras:
     def __init__(self, banco, estoque):
@@ -8,6 +8,7 @@ class Compras:
         self.estoque = estoque
         if self.conn:
             self.criar_tabela_compras()
+            self.criar_tabela_carrinho()
     
     def conectar_banco(self, banco):
        try:
@@ -46,12 +47,111 @@ class Compras:
         self.conn.commit()
         cursor.close()
 
-    def verificar_estoque(self, produto_id, quantidade_comprada):
-        estoque_atual = self.consultar_quantidade(produto_id)
-        return estoque_atual >= quantidade_comprada
+    def criar_tabela_carrinho(self):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS carrinho (
+                id_carrinho INT AUTO_INCREMENT PRIMARY KEY,
+                usuario_id INT,
+                produto_id INT,
+                quantidade INT,
+                FOREIGN KEY (produto_id) REFERENCES estoque(id)
+            );
+        """)
+        self.conn.commit()
+        cursor.close()
+
+    def adicionar_ao_carrinho(self, usuario_id, produto_id, quantidade):
+        cursor = self.conn.cursor()
+        if self.estoque.verificar_estoque(produto_id, quantidade):
+            self.estoque.atualizar_quantidade(produto_id, -quantidade)
+            cursor.execute("""
+                    INSERT INTO carrinho (usuario_id, produto_id, quantidade, timestamp_adicionado)
+                    VALUES (%s, %s, %s, %s)
+                """, (usuario_id, produto_id, quantidade, datetime.now()))
+            self.conn.commit()
+        cursor.close()
+
+    def remover_do_carrinho(self, usuario_id, produto_id):
+        cursor = self.conn.cursor()
+
+        cursor.execute("""
+            SELECT quantidade FROM carrinho WHERE usuario_id = %s AND produto_id = %s
+        """, (usuario_id, produto_id))
+        resultado = cursor.fetchone()
+
+        if resultado:
+            quantidade = resultado[0]
+            self.estoque.atualizar_quantidade(produto_id, quantidade) 
+
+            cursor.execute("""
+                DELETE FROM carrinho WHERE usuario_id = %s AND produto_id = %s
+            """, (usuario_id, produto_id))
+            self.conn.commit()
+
+        cursor.close()
+
+    def limpar_carrinho_expirado(self):
+        cursor = self.conn.cursor()
+        agora = datetime.now()
+        limite = agora - timedelta(minutes=30)
+
+        cursor.execute("SELECT produto_id, quantidade FROM carrinho WHERE timestamp_adicionado < %s", (limite,))
+        itens_vencidos = cursor.fetchall()
+
+        for produto_id, quantidade in itens_vencidos:
+            self.estoque.atualizar_quantidade(produto_id, quantidade)
+
+        cursor.execute("DELETE FROM carrinho WHERE timestamp_adicionado < %s", (limite,))
+        self.conn.commit()
+        cursor.close()
+    def ver_carrinho(self, usuario_id):
+        cursor = self.conn.cursor(dictionary=True)
+        cursor.execute("""
+            SELECT c.produto_id, e.produto, c.quantidade, e.preco 
+            FROM carrinho c
+            JOIN estoque e ON c.produto_id = e.id
+            WHERE c.usuario_id = %s;
+        """, (usuario_id,))
+        itens = cursor.fetchall()
+        cursor.close()
+        return itens
+    
+    def finalizar_compra(self, usuario_id):
+        print("Tipo do self.estoque:", type(self.estoque))
+        print("Tem verificar_estoque?", hasattr(self.estoque, "verificar_estoque"))
+        carrinho = self.ver_carrinho(usuario_id)
+        if not carrinho:
+            print("Carrinho vazio. Adicione produtos antes de finalizar a compra.")
+            return
+        cursor = self.conn.cursor()
+        for item in carrinho:
+            produto_id = item['produto_id']
+            quantidade = item['quantidade']
+            preco_unitario = item['preco']
+            preco_total = quantidade * preco_unitario
+
+            if self.estoque.verificar_estoque(produto_id, quantidade):
+                cursor.execute("""
+                    INSERT INTO compras (usuario_id, produto_id, quantidade, preco_total, data_compra)
+                    VALUES (%s, %s, %s, %s, NOW())
+                """, (usuario_id, produto_id, quantidade, preco_total))
+                
+                cursor.execute("""
+                    UPDATE estoque
+                    SET quantidade = quantidade - %s
+                    WHERE id = %s
+                """, (quantidade, produto_id))
+            else:
+                print(f"Estoque insuficiente para {item['produto']}. Não foi possível comprar.")
+
+        cursor.execute("DELETE FROM carrinho WHERE usuario_id = %s", (usuario_id,))
+        self.conn.commit()
+        cursor.close()
+        print("Compra finalizada com sucesso!")
 
     def registrar_compra(self, usuario_id, produto_id, quantidade, preco_unitario):
-        if self.verificar_estoque(produto_id, quantidade):
+        if self.estoque.verificar_estoque(produto_id, quantidade):
             preco_total = quantidade * preco_unitario
             cursor = self.conn.cursor()
 
@@ -95,14 +195,7 @@ class Compras:
                 print(f"Erro na compra: {e}")
             finally:
                 cursor.close()
-
-    def consultar_quantidade(self, produto_id):
-        cursor = self.conn.cursor()
-        cursor.execute("SELECT quantidade FROM estoque WHERE id = %s", (produto_id,))
-        resultado = cursor.fetchone()
-        cursor.close()
-        return resultado[0] if resultado else 0
-
+    
     def consultar_preco(self, produto_id):
         cursor = self.conn.cursor()
         cursor.execute("SELECT preco FROM estoque WHERE id = %s", (produto_id,))

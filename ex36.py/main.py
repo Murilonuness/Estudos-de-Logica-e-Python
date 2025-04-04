@@ -40,14 +40,19 @@ def menu_login():
 
 def menu_usuario_logado():
     print("\n--- Menu de Usuário Logado ---")
-    print("1. Registrar Compra")
-    print("2. Logout")
+    print("1. Adicionar item ao carrinho")
+    print("2. Ver carrinho")
+    print("3. Remover item do carrinho")
+    print("4. Finalizar compra")
+    print("5. Logout")
+    print("6. Consultar compras")
 
 def main():
     estoque = Estoque("estoque_db")
     compras = Compras("estoque_db", estoque)
     user_manager = User("estoque_db")
     usuario_logado = None
+    carrinhos = {}
 
     while True:
         print("\n--- Menu Principal ---")
@@ -170,7 +175,7 @@ def main():
                     quantidade = int(input("Quantidade de produto: "))
                     preco_unitario = float(input("Preço Unitário do Produto: "))
 
-                    if compras.verificar_estoque(produto_id, quantidade):
+                    if estoque.verificar_estoque(produto_id, quantidade):
                         compras.registrar_compra(usuario_id, produto_id, quantidade, preco_unitario)
                         print("Compra registrada com sucesso!")
                     else:
@@ -202,20 +207,47 @@ def main():
                     if usuario_logado:
                         while True:
                             menu_usuario_logado()
-                            escolha_logado = input("Escolha uma opção (1-2): ")
+                            escolha_logado = input("Escolha uma opção (1-5): ")
+
                             if escolha_logado == '1':
                                 usuario_id = usuario_logado[0]
-                                produto_id = int(input("ID do Produto a ser comprado: "))
-                                quantidade = int(input("Quantidade de produto: "))
-                                preco_unitario = float(input("Preço Unitário do Produto: "))
-                                if compras.verificar_estoque(produto_id, quantidade):
-                                    compras.registrar_compra(usuario_id, produto_id, quantidade, preco_unitario)
-                                    print("Compra registrada com sucesso!")
-                                else:
-                                    print("Estoque insuficiente para a quantidade solicitada. Tente uma quantidade menor.")
+                                produto_id = int(input("ID do Produto a ser adicionado ao carrinho: "))
+                                quantidade = int(input("Quantidade: "))
+                                compras.adicionar_ao_carrinho(usuario_id, produto_id, quantidade)
+
                             elif escolha_logado == '2':
+                                usuario_id = usuario_logado[0]
+                                itens = compras.ver_carrinho(usuario_id)
+                                if not itens:
+                                    print("Carrinho vazio.")
+                                else:
+                                    print("\n--- Itens no Carrinho ---")
+                                    for item in itens:
+                                        print(f"Produto: {item['produto']} | ID: {item['produto_id']} | Quantidade: {item['quantidade']} | Preço Unitário: R${item['preco']:.2f}")
+
+                            elif escolha_logado == '3':
+                                usuario_id = usuario_logado[0]
+                                produto_id = int(input("ID do Produto que deseja remover do carrinho: "))
+                                compras.remover_do_carrinho(usuario_id, produto_id)
+
+                            elif escolha_logado == '4':
+                                usuario_id = usuario_logado[0]
+                                compras.finalizar_compra(usuario_id)
+
+                            elif escolha_logado == '5':
                                 usuario_logado = None
                                 break
+                            elif escolha_logado == '6':
+                                usuario_id = usuario_logado[0]
+                                compras_usuario = user_manager.consultar_compras_do_usuario(usuario_id)
+                                if compras_usuario:
+                                    print("\n--- Compras Realizadas ---")
+                                    for compra in compras_usuario:
+                                        print(f"ID Compra: {compra['id_compra']} | Produto: {compra['nome_produto']} | "
+                                              f"Qtd: {compra['quantidade']} | Total: R${compra['preco_total']:.2f} | "
+                                              f"Data: {compra['data_compra'].strftime('%d/%m/%Y %H:%M')}")
+                                else:
+                                    print("Nenhuma compra encontrada.")
                             else:
                                 print("Opção inválida. Tente novamente.")
                 elif escolha_login == '2':

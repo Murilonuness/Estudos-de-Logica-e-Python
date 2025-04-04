@@ -142,6 +142,30 @@ class User:
             return False
         return True
 
+    def consultar_compras_do_usuario(self, usuario_id):
+        cursor = self.conn.cursor(dictionary=True)
+        try:
+            query = """
+                SELECT 
+                    compras.id_compra,
+                    estoque.produto AS nome_produto,
+                    compras.quantidade,
+                    compras.preco_total,
+                    compras.data_compra
+                FROM compras
+                JOIN estoque ON compras.produto_id = estoque.id
+                WHERE compras.usuario_id = %s
+                ORDER BY compras.data_compra DESC
+            """
+            cursor.execute(query, (usuario_id,))
+            resultados = cursor.fetchall()
+            return resultados
+        except Exception as e:
+            print(f"Erro ao consultar compras do usuário: {e}")
+            return []
+        finally:
+            cursor.close()
+
     def close_connection(self):
         self.cursor.close()
         self.conn.close()
