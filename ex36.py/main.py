@@ -20,9 +20,12 @@ def menu_estoque():
 def menu_compras():
     print("\n--- Menu de Compras ---")
     print("1. Registrar Compra")
-    print("2. Consultar Compras")
-    print("3. Estatísticas de Compras")
-    print("4. Voltar ao Menu Principal")
+    print("2. Consultar Todas as Compras")
+    print("3. Consultar Compras por Usuário")
+    print("4. Top 5 Produtos Mais Vendidos")
+    print("5. Top 5 Usuários que Mais Gastaram")
+    print("6. Estatísticas de Compras")
+    print("7. Voltar ao Menu Principal")
 
 def menu_usuarios():
     print("\n--- Menu de Usuários ---")
@@ -31,7 +34,9 @@ def menu_usuarios():
     print("3. Atualizar Usuário")
     print("4. Deletar Usuário")
     print("5. Buscar Usuário por Nome")
-    print("6. Voltar ao Menu Principal")
+    print("6. Alterar Senha")
+    print("7. Resetar Senha")
+    print("8. Voltar ao Menu Principal")
 
 def menu_login():
     print("\n--- Menu de Login ---")
@@ -44,8 +49,10 @@ def menu_usuario_logado():
     print("2. Ver carrinho")
     print("3. Remover item do carrinho")
     print("4. Finalizar compra")
-    print("5. Logout")
-    print("6. Consultar compras")
+    print("5. Consultar compras")
+    print("6. Alterar dados")
+    print("7. Resetar senha")
+    print("8. Logout")
 
 def main():
     estoque = Estoque("estoque_db")
@@ -112,10 +119,16 @@ def main():
                         print("Nenhum usuário encontrado com esse nome.")
 
                 elif escolha_usuario == '6':
+                    email = input("Digite o email do usuário: ")
+                    nova_senha = input("Digite a nova senha: ")
+                    user_manager.alterar_senha(email, nova_senha)
+
+                elif escolha_usuario == '7':
+                    email = input("Digite o email do usuário para resetar a senha: ")
+                    user_manager.resetar_senha(email)
+
+                elif escolha_usuario == '8':
                     break
-                else:
-                    print("Opção inválida. Tente novamente.")
-        
         elif escolha_principal == '2':
             while True:
                 menu_estoque()
@@ -168,7 +181,8 @@ def main():
         elif escolha_principal == '3':
             while True:
                 menu_compras()
-                escolha_compras = input("Escolha uma opção (1-4): ")
+                escolha_compras = input("Escolha uma opção (1-7): ")
+
                 if escolha_compras == '1':
                     usuario_id = int(input("ID do Usuário que está comprando: "))
                     produto_id = int(input("ID do Produto a ser comprado: "))
@@ -180,18 +194,68 @@ def main():
                         print("Compra registrada com sucesso!")
                     else:
                         print("Estoque insuficiente para a quantidade solicitada. Tente uma quantidade menor.")
+
                 elif escolha_compras == '2':
-                    produto_id = int(input("ID do Produto (ou 0 para todas as compras): "))
-                    data_inicio = input("Data de Início (YYYY-MM-DD): ")
-                    data_fim = input("Data de Fim (YYYY-MM-DD): ")
-                    compras_realizadas = compras.consultar_compras(produto_id, data_inicio, data_fim)
-                    print(f"\nCompras realizadas: {compras_realizadas}")
+                    try:
+                        produto_id = int(input("ID do Produto (ou 0 para todas as compras): "))
+                        data_inicio = input("Data de Início (YYYY-MM-DD): ")
+                        data_fim = input("Data de Fim (YYYY-MM-DD): ")
+                        compras_realizadas = compras.consultar_compras(
+                            produto_id if produto_id != 0 else None,
+                            data_inicio,
+                            data_fim
+                        )
+
+                        print("\nCompras Realizadas no Período:")
+
+                        if not compras_realizadas:
+                            print("Nenhuma compra encontrada no período informado.")
+                        else:
+                            for compra in compras_realizadas:
+                                print(f"  - Produto ID: {compra['produto_id']}")
+                                print(f"    Quantidade: {compra['quantidade']}")
+                                print(f"    Preço Total: R${float(compra['preco_total']):.2f}".replace(".", ","))
+                                print(f"    Data: {compra['data_compra']}")
+                                print("-" * 40)
+                    except Exception as e:
+                        print(f"Erro ao consultar compras: {e}")
+
                 elif escolha_compras == '3':
-                    estatisticas = compras.estatisticas_compras()
-                    print(f"\nEstatísticas de Compras:")
-                    print(f"Total lucro da loja por mês: {estatisticas['total_lucro_por_mes']}")
-                    print(f"Produto mais comprado: {estatisticas['produto_mais_comprado']}")
+                    usuario_id = int(input("ID do Usuário: "))
+                    compras_usuario = compras.consultar_compras_por_usuario(usuario_id)
+    
+                    for compra in compras_usuario:
+                        print(f"Produto: {compra['nome_produto']} | Quantidade: {compra['quantidade']} | "
+                              f"Total: R${compra['preco_total']:.2f} | Data: {compra['data_compra']}")
+
                 elif escolha_compras == '4':
+                    top_produtos = compras.produtos_mais_vendidos()
+                    print("\nTop 5 Produtos Mais Vendidos:")
+                    for produto in top_produtos:
+                        print(f"Produto: {produto['nome']} | Quantidade Vendida: {produto['quantidade_total']}")
+
+                elif escolha_compras == '5':
+                    top_usuarios = compras.usuarios_que_mais_compraram()
+                    print("\nTop 5 Usuários que Mais Gastaram:")
+                    for usuario in top_usuarios:
+                        print(f"Usuário: {usuario['nome']} | Total Gasto: R${usuario['total_gasto']:.2f}")
+
+                elif escolha_compras == '6':
+                    estatisticas = compras.estatisticas_compras()
+                    print("\nEstatísticas de Compras:")
+
+                    print("\nLucro total da loja por mês:")
+                    for item in estatisticas['total_lucro_por_mes']:
+                        mes = item['mes']
+                        total = float(item['total_gasto'])
+                        print(f"  - {mes}: R${total:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+
+                    print("\nProduto mais comprado:")
+                    produto = estatisticas['produto_mais_comprado']
+                    print(f"  - ID do Produto: {produto['produto_id']}")
+                    print(f"  - Total Comprado: {int(produto['total_comprado'])}")
+
+                elif escolha_compras == '7':
                     break
                 else:
                     print("Opção inválida. Tente novamente.")
@@ -207,7 +271,7 @@ def main():
                     if usuario_logado:
                         while True:
                             menu_usuario_logado()
-                            escolha_logado = input("Escolha uma opção (1-5): ")
+                            escolha_logado = input("Escolha uma opção (1-8): ")
 
                             if escolha_logado == '1':
                                 usuario_id = usuario_logado[0]
@@ -235,9 +299,6 @@ def main():
                                 compras.finalizar_compra(usuario_id)
 
                             elif escolha_logado == '5':
-                                usuario_logado = None
-                                break
-                            elif escolha_logado == '6':
                                 usuario_id = usuario_logado[0]
                                 compras_usuario = user_manager.consultar_compras_do_usuario(usuario_id)
                                 if compras_usuario:
@@ -248,6 +309,35 @@ def main():
                                               f"Data: {compra['data_compra'].strftime('%d/%m/%Y %H:%M')}")
                                 else:
                                     print("Nenhuma compra encontrada.")
+
+                            elif escolha_logado == '6':
+                                usuario_id = usuario_logado[0]
+                                nome = input("Novo nome (ou deixe em branco): ")
+                                telefone = input("Novo telefone (ou deixe em branco): ")
+                                cidade = input("Nova cidade (ou deixe em branco): ")
+                                sexo = input("Novo sexo (ou deixe em branco): ")
+                                segundo_nome = input("Novo segundo nome (ou deixe em branco): ")
+                                email_novo = input("Novo email (ou deixe em branco): ")
+                                senha_nova = input("Nova senha (ou deixe em branco): ")
+                                user_manager.update_user(
+                                    usuario_id,
+                                    nome or None,
+                                    telefone or None,
+                                    cidade or None,
+                                    sexo or None,
+                                    segundo_nome or None,
+                                    email_novo or None,
+                                    senha_nova or None
+                                )
+
+                            elif escolha_logado == '7':
+                                email = input("Confirme seu email para resetar a senha: ")
+                                user_manager.resetar_senha(email)
+
+                            elif escolha_logado == '8':
+                                usuario_logado = None
+                                break
+                            
                             else:
                                 print("Opção inválida. Tente novamente.")
                 elif escolha_login == '2':

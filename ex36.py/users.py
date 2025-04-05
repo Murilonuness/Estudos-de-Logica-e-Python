@@ -1,4 +1,6 @@
 import mysql.connector
+import random
+import string
 
 class User:
     def __init__(self, db_name):
@@ -103,6 +105,33 @@ class User:
     def telefone_exists(self, telefone):
         self.cursor.execute("SELECT id FROM users WHERE telefone = %s", (telefone,))
         return self.cursor.fetchone() is not None
+    
+    def alterar_senha(self, email, nova_senha):
+        if not self.email_exists(email):
+            print("Erro: E-mail não encontrado.")
+            return
+        
+        if len(nova_senha) < 6:
+            print("Erro: A nova senha deve ter pelo menos 6 caracteres.")
+            return
+
+        try:
+            self.cursor.execute("UPDATE users SET senha = %s WHERE email = %s", (nova_senha, email))
+            self.conn.commit()
+            print("Senha alterada com sucesso!")
+        except mysql.connector.Error as err:
+            print(f"Erro ao alterar senha: {err}")
+
+    def resetar_senha(self, email):
+        usuarios = self.read_users()
+        for usuario in usuarios:
+            if usuario[6] == email:
+                nova_senha = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+                self.cursor.execute("UPDATE users SET senha = %s WHERE email = %s", (nova_senha, email))
+                self.conn.commit()
+                print(f"Senha resetada com sucesso. Nova senha: {nova_senha}")
+                return
+        print("Usuário não encontrado.")
 
     def login(self, email, senha):
         self.cursor.execute("SELECT id, nome FROM users WHERE email = %s AND senha = %s", (email, senha))

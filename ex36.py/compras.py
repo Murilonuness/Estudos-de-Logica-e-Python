@@ -220,6 +220,50 @@ class Compras:
         cursor.close()
         return resultados
 
+    def consultar_compras_por_usuario(self, usuario_id):
+        cursor = self.conn.cursor(dictionary=True)
+        query = """
+            SELECT c.*, e.produto AS nome_produto
+            FROM compras c
+            JOIN estoque e ON c.produto_id = e.id
+            WHERE c.usuario_id = %s
+            ORDER BY c.data_compra DESC
+        """
+        cursor.execute(query, (usuario_id,))
+        compras_usuario = cursor.fetchall()
+        cursor.close()
+        return compras_usuario
+
+    def produtos_mais_vendidos(self, limite=5):
+        cursor = self.conn.cursor(dictionary=True)
+        query = """
+            SELECT e.produto AS nome, SUM(c.quantidade) AS quantidade_total
+            FROM compras c
+            JOIN estoque e ON c.produto_id = e.id
+            GROUP BY c.produto_id
+            ORDER BY quantidade_total DESC
+            LIMIT %s
+        """
+        cursor.execute(query, (limite,))
+        top_produtos = cursor.fetchall()
+        cursor.close()
+        return top_produtos
+    
+    def usuarios_que_mais_compraram(self, limite=5):
+        cursor = self.conn.cursor(dictionary=True)
+        query = """
+            SELECT u.nome, SUM(c.preco_total) AS total_gasto
+            FROM users u
+            JOIN compras c ON u.id = c.usuario_id
+            GROUP BY u.id
+            ORDER BY total_gasto DESC
+            LIMIT %s
+        """
+        cursor.execute(query, (limite,))
+        top_usuarios = cursor.fetchall()
+        cursor.close()
+        return top_usuarios
+
     def estatisticas_compras(self):
         cursor = self.conn.cursor(dictionary=True)
         
