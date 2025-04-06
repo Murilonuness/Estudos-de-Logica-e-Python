@@ -1,6 +1,8 @@
 import mysql.connector
 import random
 import string
+from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash
 
 class User:
     def __init__(self, db_name):
@@ -18,27 +20,27 @@ class User:
 
     def create_user(self, nome, telefone, cidade, sexo, segundo_nome, email, senha):
         print(f"Tentando criar usuário: {nome}, {telefone}, {cidade}, {sexo}, {segundo_nome}, {email}")
+
         if not self.validar_inputs(nome, telefone, cidade, sexo, segundo_nome, email, senha):
             return
 
         if self.email_exists(email):
             print("Erro: Este e-mail já está cadastrado.")
             return
-        
+
         if self.telefone_exists(telefone):
             print("Erro: Este telefone já está cadastrado.")
             return
+
+        senha_hash = generate_password_hash(senha)
 
         sql = """
         INSERT INTO users (nome, telefone, cidade, sexo, segundoNome, email, senha)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
         try:
-            self.cursor.execute(sql, (nome, telefone, cidade, sexo, segundo_nome, email, senha))
+            self.cursor.execute(sql, (nome, telefone, cidade, sexo, segundo_nome, email, senha_hash))
             self.conn.commit()
-            self.conn.commit()
-            print("Commit executado!")
-
             print("Usuário cadastrado com sucesso!")
         except mysql.connector.Error as err:
             print(f"Erro ao inserir usuário: {err}")
@@ -80,8 +82,9 @@ class User:
             sql += "email = %s, "
             values.append(email)
         if senha:
+            senha_hash = generate_password_hash(senha)
             sql += "senha = %s, "
-            values.append(senha)
+            values.append(senha_hash)
 
         if values:
             sql = sql.rstrip(", ") + " WHERE id = %s"
@@ -110,13 +113,14 @@ class User:
         if not self.email_exists(email):
             print("Erro: E-mail não encontrado.")
             return
-        
+
         if len(nova_senha) < 6:
             print("Erro: A nova senha deve ter pelo menos 6 caracteres.")
             return
 
         try:
-            self.cursor.execute("UPDATE users SET senha = %s WHERE email = %s", (nova_senha, email))
+            senha_hash = generate_password_hash(nova_senha)
+            self.cursor.execute("UPDATE users SET senha = %s WHERE email = %s", (senha_hash, email))
             self.conn.commit()
             print("Senha alterada com sucesso!")
         except mysql.connector.Error as err:
@@ -127,21 +131,26 @@ class User:
         for usuario in usuarios:
             if usuario[6] == email:
                 nova_senha = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
-                self.cursor.execute("UPDATE users SET senha = %s WHERE email = %s", (nova_senha, email))
+                senha_hash = generate_password_hash(nova_senha)
+                self.cursor.execute("UPDATE users SET senha = %s WHERE email = %s", (senha_hash, email))
                 self.conn.commit()
                 print(f"Senha resetada com sucesso. Nova senha: {nova_senha}")
                 return
         print("Usuário não encontrado.")
 
     def login(self, email, senha):
-        self.cursor.execute("SELECT id, nome FROM users WHERE email = %s AND senha = %s", (email, senha))
+        self.cursor.execute("SELECT id, nome, senha FROM users WHERE email = %s", (email,))
         user = self.cursor.fetchone()
         if user:
-            print(f"Bem-vindo, {user[1]}!")
-            return user
+            user_id, nome, senha_hash = user
+            if check_password_hash(senha_hash, senha):
+                print(f"Bem-vindo, {nome}!")
+                return (user_id, nome)
+            else:
+                print("Senha incorreta.")
         else:
-            print("Email ou senha incorretos.")
-            return None
+            print("E-mail não encontrado.")
+        return None
 
     def search_by_name(self, nome):
         self.cursor.execute("SELECT id, nome, telefone, cidade, email FROM users WHERE nome LIKE %s", (f"%{nome}%",))
