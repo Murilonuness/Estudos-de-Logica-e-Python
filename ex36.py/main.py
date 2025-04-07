@@ -1,5 +1,6 @@
 from estoque import Estoque
 from compras import Compras
+from admin_create import AdminManager
 from users import User
 
 def menu_estoque():
@@ -54,213 +55,233 @@ def menu_usuario_logado():
     print("7. Resetar senha")
     print("8. Logout")
 
+def menu_admin():
+    print("\n--- Menu de Admin ---")
+    print("1. Menu de Usuários")
+    print("2. Menu de Estoque")
+    print("3. Menu de Compras")
+    print("4. Voltar ao Menu Principal")
+
 def main():
     estoque = Estoque("estoque_db")
     compras = Compras("estoque_db", estoque)
     user_manager = User("estoque_db")
+    admin_manager = AdminManager("estoque_db")
     usuario_logado = None
     carrinhos = {}
-
+    
     while True:
         print("\n--- Menu Principal ---")
-        print("1. Acessar Menu de Usuários")
-        print("2. Acessar Menu de Estoque")
-        print("3. Acessar Menu de Compras")
-        print("4. Acesso de Usuário")
-        print("5. Sair")
+        print("1. Acesso de Admin")
+        print("2. Acesso de Usuário")
+        print("3. Sair")
 
-        escolha_principal = input("Escolha uma opção (1-4): ")
+        escolha_principal = input("Escolha uma opção (1-3): ")
 
         if escolha_principal == '1':
-            while True:
-                menu_usuarios()
-                escolha_usuario = input("Escolha uma opção (1-6): ")
-                
-                if escolha_usuario == '1':
-                    nome = input("Nome: ")
-                    telefone = input("Telefone: ")
-                    cidade = input("Cidade: ")
-                    sexo = input("Sexo (M/F/Outro): ")
-                    segundo_nome = input("Segundo Nome: ")
-                    email = input("Email: ")
-                    senha = input("Senha: ")
-                    user_manager.create_user(nome, telefone, cidade, sexo, segundo_nome, email, senha)
+            email = input("Email do admin: ")
+            senha = input("Senha do admin: ")
+            token = admin_manager.verificar_admin(email, senha)
+            if token:
+                print("Login de admin bem-sucedido.")
+                print("Token de autenticação:", token)
+                while True:
+                    menu_admin()
+                    escolha_admin = input("Escolha uma opção (1-4): ")
+                    if escolha_admin == '1':
+                        while True:
+                            menu_usuarios()
+                            escolha_usuario = input("Escolha uma opção (1-6): ")
 
-                elif escolha_usuario == '2':
-                    usuarios = user_manager.read_users()
-                    if usuarios:
-                        for usuario in usuarios:
-                            print(usuario)
-                    else:
-                        print("Nenhum usuário encontrado.")
+                            if escolha_usuario == '1':
+                                nome = input("Nome: ")
+                                telefone = input("Telefone: ")
+                                cidade = input("Cidade: ")
+                                sexo = input("Sexo (M/F/Outro): ")
+                                segundo_nome = input("Segundo Nome: ")
+                                email = input("Email: ")
+                                senha = input("Senha: ")
+                                user_manager.create_user(nome, telefone, cidade, sexo, segundo_nome, email, senha)
 
-                elif escolha_usuario == '3':
-                    user_id = input("Digite o ID do usuário a ser atualizado: ")
-                    nome = input("Novo nome (ou deixe em branco): ")
-                    telefone = input("Novo telefone (ou deixe em branco): ")
-                    cidade = input("Nova cidade (ou deixe em branco): ")
-                    sexo = input("Novo sexo (ou deixe em branco): ")
-                    segundo_nome = input("Novo segundo nome (ou deixe em branco): ")
-                    email = input("Novo email (ou deixe em branco): ")
-                    senha = input("Nova senha (ou deixe em branco): ")
-                    user_manager.update_user(user_id, nome or None, telefone or None, cidade or None, sexo or None, segundo_nome or None, email or None, senha or None)
+                            elif escolha_usuario == '2':
+                                usuarios = user_manager.read_users()
+                                if usuarios:
+                                    for usuario in usuarios:
+                                        print(usuario)
+                                else:
+                                    print("Nenhum usuário encontrado.")
 
-                elif escolha_usuario == '4':
-                    user_id = input("Digite o ID do usuário a ser deletado: ")
-                    user_manager.delete_user(user_id)
+                            elif escolha_usuario == '3':
+                                user_id = input("Digite o ID do usuário a ser atualizado: ")
+                                nome = input("Novo nome (ou deixe em branco): ")
+                                telefone = input("Novo telefone (ou deixe em branco): ")
+                                cidade = input("Nova cidade (ou deixe em branco): ")
+                                sexo = input("Novo sexo (ou deixe em branco): ")
+                                segundo_nome = input("Novo segundo nome (ou deixe em branco): ")
+                                email = input("Novo email (ou deixe em branco): ")
+                                senha = input("Nova senha (ou deixe em branco): ")
+                                user_manager.update_user(user_id, nome or None, telefone or None, cidade or None, sexo or None, segundo_nome or None, email or None, senha or None)
 
-                elif escolha_usuario == '5':
-                    nome = input("Digite o nome para buscar: ")
-                    usuarios = user_manager.search_by_name(nome)
-                    if usuarios:
-                        for usuario in usuarios:
-                            print(usuario)
-                    else:
-                        print("Nenhum usuário encontrado com esse nome.")
+                            elif escolha_usuario == '4':
+                                user_id = input("Digite o ID do usuário a ser deletado: ")
+                                user_manager.delete_user(user_id)
 
-                elif escolha_usuario == '6':
-                    email = input("Digite o email do usuário: ")
-                    nova_senha = input("Digite a nova senha: ")
-                    user_manager.alterar_senha(email, nova_senha)
+                            elif escolha_usuario == '5':
+                                nome = input("Digite o nome para buscar: ")
+                                usuarios = user_manager.search_by_name(nome)
+                                if usuarios:
+                                    for usuario in usuarios:
+                                        print(usuario)
+                                else:
+                                    print("Nenhum usuário encontrado com esse nome.")
 
-                elif escolha_usuario == '7':
-                    email = input("Digite o email do usuário para resetar a senha: ")
-                    user_manager.resetar_senha(email)
+                            elif escolha_usuario == '6':
+                                email = input("Digite o email do usuário: ")
+                                nova_senha = input("Digite a nova senha: ")
+                                user_manager.alterar_senha(email, nova_senha)
 
-                elif escolha_usuario == '8':
-                    break
+                            elif escolha_usuario == '7':
+                                email = input("Digite o email do usuário para resetar a senha: ")
+                                user_manager.resetar_senha(email)
+
+                            elif escolha_usuario == '8':
+                                break
+                    
+                    if escolha_admin == '2':
+                        while True:
+                            menu_estoque()
+                            escolha_estoque = input("Escolha uma opção (1-12): ")
+                            if escolha_estoque == '1':
+                                produto = input("Nome do Produto: ")
+                                preco = float(input("Preço do Produto: "))
+                                marca = input("Marca do Produto: ")
+                                peso = float(input("Peso do Produto (kg): "))
+                                quantidade = int(input("Quantidade do Produto: "))
+                                categoria = input("Categoria do Produto: ")
+                                estoque.adc_produto(produto, preco, marca, peso, quantidade, categoria)
+                            elif escolha_estoque == '2':
+                                produto_id = int(input("ID do Produto a ser removido: "))
+                                quantidade = int(input("Quantidade a ser removida: "))
+                                estoque.remove_produto(produto_id, quantidade)
+                            elif escolha_estoque == '3':
+                                produto_id = int(input("ID do Produto a ser atualizado: "))
+                                quantidade = int(input("Nova Quantidade: "))
+                                estoque.update_quantidade_por_id(produto_id, quantidade)
+                            elif escolha_estoque == '4':
+                                produto = input("Nome do Produto a ser atualizado: ")
+                                quantidade = int(input("Nova Quantidade: "))
+                                estoque.update_quantidade_por_nome(produto, quantidade)
+                            elif escolha_estoque == '5':
+                                produto_id = int(input("ID do Produto a ser atualizado: "))
+                                preco = float(input("Novo Preço: "))
+                                estoque.update_preco(produto_id, preco)
+                            elif escolha_estoque == '6':
+                                produto_id = int(input("ID do Produto a ser excluído: "))
+                                estoque.excluir_produto(produto_id)
+                            elif escolha_estoque == '7':
+                                estoque.listar_todos_produtos()
+                            elif escolha_estoque == '8':
+                                produto_id = int(input("ID do Produto: "))
+                                estoque.listar_produto_por_id(produto_id)
+                            elif escolha_estoque == '9':
+                                stats = estoque.estoqueStats()
+                                print(f"\nEstatísticas de Estoque:")
+                                print(f"Total de Produtos: {stats['total_produtos']}")
+                                print(f"Quantidade Total em Estoque: {stats['quantidade_total']}")
+                            elif escolha_estoque == '10':
+                                estoque.listar_historico()
+                            elif escolha_estoque == '11':
+                                estoque.limpar_historico()
+                            elif escolha_estoque == '12':
+                                break
+                            else:
+                                print("Opção inválida. Tente novamente.")
+                    elif escolha_admin == '3':
+                        while True:
+                            menu_compras()
+                            escolha_compras = input("Escolha uma opção (1-7): ")
+
+                            if escolha_compras == '1':
+                                usuario_id = int(input("ID do Usuário que está comprando: "))
+                                produto_id = int(input("ID do Produto a ser comprado: "))
+                                quantidade = int(input("Quantidade de produto: "))
+                                preco_unitario = float(input("Preço Unitário do Produto: "))
+
+                                if estoque.verificar_estoque(produto_id, quantidade):
+                                    compras.registrar_compra(usuario_id, produto_id, quantidade, preco_unitario)
+                                    print("Compra registrada com sucesso!")
+                                else:
+                                    print("Estoque insuficiente para a quantidade solicitada. Tente uma quantidade menor.")
+
+                            elif escolha_compras == '2':
+                                try:
+                                    produto_id = int(input("ID do Produto (ou 0 para todas as compras): "))
+                                    data_inicio = input("Data de Início (YYYY-MM-DD): ")
+                                    data_fim = input("Data de Fim (YYYY-MM-DD): ")
+                                    compras_realizadas = compras.consultar_compras(
+                                        produto_id if produto_id != 0 else None,
+                                        data_inicio,
+                                        data_fim
+                                    )
+
+                                    print("\nCompras Realizadas no Período:")
+
+                                    if not compras_realizadas:
+                                        print("Nenhuma compra encontrada no período informado.")
+                                    else:
+                                        for compra in compras_realizadas:
+                                            print(f"  - Produto ID: {compra['produto_id']}")
+                                            print(f"    Quantidade: {compra['quantidade']}")
+                                            print(f"    Preço Total: R${float(compra['preco_total']):.2f}".replace(".", ","))
+                                            print(f"    Data: {compra['data_compra']}")
+                                            print("-" * 40)
+                                except Exception as e:
+                                    print(f"Erro ao consultar compras: {e}")
+
+                            elif escolha_compras == '3':
+                                usuario_id = int(input("ID do Usuário: "))
+                                compras_usuario = compras.consultar_compras_por_usuario(usuario_id)
+
+                                for compra in compras_usuario:
+                                    print(f"Produto: {compra['nome_produto']} | Quantidade: {compra['quantidade']} | "
+                                          f"Total: R${compra['preco_total']:.2f} | Data: {compra['data_compra']}")
+
+                            elif escolha_compras == '4':
+                                top_produtos = compras.produtos_mais_vendidos()
+                                print("\nTop 5 Produtos Mais Vendidos:")
+                                for produto in top_produtos:
+                                    print(f"Produto: {produto['nome']} | Quantidade Vendida: {produto['quantidade_total']}")
+
+                            elif escolha_compras == '5':
+                                top_usuarios = compras.usuarios_que_mais_compraram()
+                                print("\nTop 5 Usuários que Mais Gastaram:")
+                                for usuario in top_usuarios:
+                                    print(f"Usuário: {usuario['nome']} | Total Gasto: R${usuario['total_gasto']:.2f}")
+
+                            elif escolha_compras == '6':
+                                estatisticas = compras.estatisticas_compras()
+                                print("\nEstatísticas de Compras:")
+
+                                print("\nLucro total da loja por mês:")
+                                for item in estatisticas['total_lucro_por_mes']:
+                                    mes = item['mes']
+                                    total = float(item['total_gasto'])
+                                    print(f"  - {mes}: R${total:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+
+                                print("\nProduto mais comprado:")
+                                produto = estatisticas['produto_mais_comprado']
+                                print(f"  - ID do Produto: {produto['produto_id']}")
+                                print(f"  - Total Comprado: {int(produto['total_comprado'])}")
+
+                            elif escolha_compras == '7':
+                                break
+                            else:
+                                print("Opção inválida. Tente novamente.")
+                    elif escolha_admin == '4':
+                        break    
+            else:
+                print("Credenciais inválidas.")
         elif escolha_principal == '2':
-            while True:
-                menu_estoque()
-                escolha_estoque = input("Escolha uma opção (1-12): ")
-                if escolha_estoque == '1':
-                    produto = input("Nome do Produto: ")
-                    preco = float(input("Preço do Produto: "))
-                    marca = input("Marca do Produto: ")
-                    peso = float(input("Peso do Produto (kg): "))
-                    quantidade = int(input("Quantidade do Produto: "))
-                    categoria = input("Categoria do Produto: ")
-                    estoque.adc_produto(produto, preco, marca, peso, quantidade, categoria)
-                elif escolha_estoque == '2':
-                    produto_id = int(input("ID do Produto a ser removido: "))
-                    quantidade = int(input("Quantidade a ser removida: "))
-                    estoque.remove_produto(produto_id, quantidade)
-                elif escolha_estoque == '3':
-                    produto_id = int(input("ID do Produto a ser atualizado: "))
-                    quantidade = int(input("Nova Quantidade: "))
-                    estoque.update_quantidade_por_id(produto_id, quantidade)
-                elif escolha_estoque == '4':
-                    produto = input("Nome do Produto a ser atualizado: ")
-                    quantidade = int(input("Nova Quantidade: "))
-                    estoque.update_quantidade_por_nome(produto, quantidade)
-                elif escolha_estoque == '5':
-                    produto_id = int(input("ID do Produto a ser atualizado: "))
-                    preco = float(input("Novo Preço: "))
-                    estoque.update_preco(produto_id, preco)
-                elif escolha_estoque == '6':
-                    produto_id = int(input("ID do Produto a ser excluído: "))
-                    estoque.excluir_produto(produto_id)
-                elif escolha_estoque == '7':
-                    estoque.listar_todos_produtos()
-                elif escolha_estoque == '8':
-                    produto_id = int(input("ID do Produto: "))
-                    estoque.listar_produto_por_id(produto_id)
-                elif escolha_estoque == '9':
-                    stats = estoque.estoqueStats()
-                    print(f"\nEstatísticas de Estoque:")
-                    print(f"Total de Produtos: {stats['total_produtos']}")
-                    print(f"Quantidade Total em Estoque: {stats['quantidade_total']}")
-                elif escolha_estoque == '10':
-                    estoque.listar_historico()
-                elif escolha_estoque == '11':
-                    estoque.limpar_historico()
-                elif escolha_estoque == '12':
-                    break
-                else:
-                    print("Opção inválida. Tente novamente.")
-        elif escolha_principal == '3':
-            while True:
-                menu_compras()
-                escolha_compras = input("Escolha uma opção (1-7): ")
-
-                if escolha_compras == '1':
-                    usuario_id = int(input("ID do Usuário que está comprando: "))
-                    produto_id = int(input("ID do Produto a ser comprado: "))
-                    quantidade = int(input("Quantidade de produto: "))
-                    preco_unitario = float(input("Preço Unitário do Produto: "))
-
-                    if estoque.verificar_estoque(produto_id, quantidade):
-                        compras.registrar_compra(usuario_id, produto_id, quantidade, preco_unitario)
-                        print("Compra registrada com sucesso!")
-                    else:
-                        print("Estoque insuficiente para a quantidade solicitada. Tente uma quantidade menor.")
-
-                elif escolha_compras == '2':
-                    try:
-                        produto_id = int(input("ID do Produto (ou 0 para todas as compras): "))
-                        data_inicio = input("Data de Início (YYYY-MM-DD): ")
-                        data_fim = input("Data de Fim (YYYY-MM-DD): ")
-                        compras_realizadas = compras.consultar_compras(
-                            produto_id if produto_id != 0 else None,
-                            data_inicio,
-                            data_fim
-                        )
-
-                        print("\nCompras Realizadas no Período:")
-
-                        if not compras_realizadas:
-                            print("Nenhuma compra encontrada no período informado.")
-                        else:
-                            for compra in compras_realizadas:
-                                print(f"  - Produto ID: {compra['produto_id']}")
-                                print(f"    Quantidade: {compra['quantidade']}")
-                                print(f"    Preço Total: R${float(compra['preco_total']):.2f}".replace(".", ","))
-                                print(f"    Data: {compra['data_compra']}")
-                                print("-" * 40)
-                    except Exception as e:
-                        print(f"Erro ao consultar compras: {e}")
-
-                elif escolha_compras == '3':
-                    usuario_id = int(input("ID do Usuário: "))
-                    compras_usuario = compras.consultar_compras_por_usuario(usuario_id)
-    
-                    for compra in compras_usuario:
-                        print(f"Produto: {compra['nome_produto']} | Quantidade: {compra['quantidade']} | "
-                              f"Total: R${compra['preco_total']:.2f} | Data: {compra['data_compra']}")
-
-                elif escolha_compras == '4':
-                    top_produtos = compras.produtos_mais_vendidos()
-                    print("\nTop 5 Produtos Mais Vendidos:")
-                    for produto in top_produtos:
-                        print(f"Produto: {produto['nome']} | Quantidade Vendida: {produto['quantidade_total']}")
-
-                elif escolha_compras == '5':
-                    top_usuarios = compras.usuarios_que_mais_compraram()
-                    print("\nTop 5 Usuários que Mais Gastaram:")
-                    for usuario in top_usuarios:
-                        print(f"Usuário: {usuario['nome']} | Total Gasto: R${usuario['total_gasto']:.2f}")
-
-                elif escolha_compras == '6':
-                    estatisticas = compras.estatisticas_compras()
-                    print("\nEstatísticas de Compras:")
-
-                    print("\nLucro total da loja por mês:")
-                    for item in estatisticas['total_lucro_por_mes']:
-                        mes = item['mes']
-                        total = float(item['total_gasto'])
-                        print(f"  - {mes}: R${total:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
-
-                    print("\nProduto mais comprado:")
-                    produto = estatisticas['produto_mais_comprado']
-                    print(f"  - ID do Produto: {produto['produto_id']}")
-                    print(f"  - Total Comprado: {int(produto['total_comprado'])}")
-
-                elif escolha_compras == '7':
-                    break
-                else:
-                    print("Opção inválida. Tente novamente.")
-
-        elif escolha_principal == '4':
             while True:
                 menu_login()
                 escolha_login = input("Escolha uma opção (1-2): ")
@@ -344,7 +365,7 @@ def main():
                     break
                 else:
                     print("Opção inválida. Tente novamente.")
-        elif escolha_principal == '5':
+        elif escolha_principal == '3':
             print("Saindo...")
             estoque.fechar_conexao()
             compras.fechar_conexao()
