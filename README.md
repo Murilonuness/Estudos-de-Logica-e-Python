@@ -3,6 +3,12 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+37. Exercício Batalha entre Monstros com POO
+
+Objetivo: Praticar os conceitos iniciais de Programação Orientada a Objetos (POO) em Python, como definição de classes, atributos, métodos e interação entre objetos.
+
+Descrição: Neste exercício, foi criada a classe Monstro, com atributos como nome, vida e vivo, além de métodos que controlam comportamentos como atacar, receber_dano e mostrar_status. Dois objetos foram instanciados representando monstros diferentes, e foi simulada uma batalha entre eles, onde cada ataque reduz a vida do adversário. O código garante que um monstro morto não possa mais atacar, e também impede que um monstro vivo ataque um oponente que já está morto. A implementação reforça o uso do self, o encapsulamento de comportamentos em métodos e a troca de mensagens entre instâncias da mesma classe. A simulação mostra a evolução do combate com feedback visual após cada ação.
+
 36. Sistema de Gerenciamento de Estoque, Compras e Usuários com MySQL
 
 Objetivo:
