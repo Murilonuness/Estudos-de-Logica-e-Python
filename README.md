@@ -3,6 +3,12 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+38. Exercício Fortaleza Mágica com POO
+
+Objetivo: Praticar os fundamentos de Programação Orientada a Objetos (POO) em Python, utilizando atributos, métodos e controle de estado interno de um objeto.
+
+Descrição: Neste exercício, foi criada a classe FortalezaMagica, que representa uma estrutura defensiva com atributos como nome, escudo, resistência e status de ativação. Os métodos implementados permitem visualizar o status atual do escudo (status), aplicar danos simulando ataques (sofrer_ataque) e reforçar o escudo com energia extra (reforcar_escudo). A lógica garante que, ao receber dano suficiente, o escudo seja desativado, e que ele possa ser reativado caso receba reforço. O exercício reforça conceitos como encapsulamento, uso de self, atualização de atributos e fluxo de decisão dentro dos métodos. A simulação fornece saídas visuais após cada ação, permitindo acompanhar o estado da fortaleza em tempo real.
+
 37. Exercício Batalha entre Monstros com POO
 
 Objetivo: Praticar os conceitos iniciais de Programação Orientada a Objetos (POO) em Python, como definição de classes, atributos, métodos e interação entre objetos.
