@@ -3,6 +3,12 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+39. Exercício Cofre do Dragão com POO e Random
+
+Objetivo: Praticar Programação Orientada a Objetos (POO) em Python com geração de números aleatórios, controle de tentativas, uso de listas com pesos (probabilidades) e interação com o usuário via terminal.
+
+Descrição: Neste exercício, foi criada a classe CofreDragao, que simula um cofre mágico protegido por um número secreto. O jogador tem um número limitado de tentativas para adivinhar esse número, com base em dois modos de jogo (Normal e Expert). A classe possui atributos como nome do dragão, intervalo do número secreto e limite de tentativas. A lógica principal está no método resultado(), que gerencia as tentativas do usuário e fornece dicas ("muito alto", "muito baixo") até que ele acerte ou atinja o limite. Ao acertar, um prêmio aleatório é sorteado com base em probabilidades definidas no método sortear_premio(). O método game() organiza o fluxo do jogo, permitindo ao jogador escolher o modo, jogar e reiniciar quantas vezes quiser. O exercício reforça o uso de atributos dinâmicos com randint, sorteios com pesos usando choices, estrutura de repetição com controle de erro (try/except) e interação contínua com o usuário.
+
 38. Exercício Fortaleza Mágica com POO
 
 Objetivo: Praticar os fundamentos de Programação Orientada a Objetos (POO) em Python, utilizando atributos, métodos e controle de estado interno de um objeto.
