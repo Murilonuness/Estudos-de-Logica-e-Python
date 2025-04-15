@@ -3,6 +3,17 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+40. Exercício Controle Financeiro com Google Sheets e Streamlit
+
+Objetivo: Desenvolver uma aplicação interativa de controle financeiro com Streamlit, integrada à API do Google Sheets para manipulação de dados. O projeto combina lógica de programação com aprendizado de como utilizar APIs e bibliotecas como Pandas e Plotly para análise de dados financeiros.
+
+Descrição: A aplicação foi construída com Streamlit para fornecer uma interface simples e interativa. A integração com a API do Google Sheets é feita pela classe GerenciarPlanilha, que permite ler, escrever e filtrar os dados financeiros na planilha. A classe PlanilhaFicticia é usada para inserir dados fictícios para facilitar os testes.
+Utilizando Pandas, os dados são processados para calcular totais, filtrar por tipo (receita ou despesa), categoria e competência (mês/ano). A lógica do sistema permite calcular o saldo total e por competência, além de gerar um resumo por categoria.
+Para a visualização dos dados, Plotly foi usado para criar gráficos interativos. Um gráfico de pizza é gerado para mostrar a distribuição por categoria, e um gráfico de linha exibe a evolução do saldo ao longo dos meses. Esses gráficos são incorporados diretamente na aplicação, permitindo ao usuário explorar visualmente os dados financeiros.
+Além disso, a aplicação oferece funcionalidades para importar e exportar dados em formato CSV, usando a biblioteca Pandas para carregar e salvar os arquivos, facilitando o fluxo de dados entre a aplicação e o usuário.
+
+Objetivo de Aprendizado: Este projeto ensina como trabalhar com a API do Google Sheets, manipular dados com Pandas, gerar visualizações com Plotly e criar uma interface de usuário interativa com Streamlit. A lógica de controle financeiro e filtragem de dados reforça conceitos importantes de programação e análise de dados, como estruturação de dados, cálculos, filtragem dinâmica e criação de gráficos interativos.
+
 39. Exercício Cofre do Dragão com POO e Random
 
 Objetivo: Praticar Programação Orientada a Objetos (POO) em Python com geração de números aleatórios, controle de tentativas, uso de listas com pesos (probabilidades) e interação com o usuário via terminal.
