@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Frutas</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'frutas/style.css' %}">
+</head>
+<body>
+    <h1>Frutas cadastradas:</h1>
+    <ul>
+        {% for fruta in frutas %}
+            <li>{{ fruta.nome }}</li>
+        {% empty %}
+            <li>Nenhuma fruta cadastrada.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -3,6 +3,16 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+41. Cadastro de Frutas em Django
+
+Objetivo: Criar um sistema de cadastro e exibição de frutas utilizando Django, integrando modelo, views, templates e estilização com CSS.
+
+Descrição: O exercício consistiu em criar um sistema para cadastrar e listar frutas. Começamos com a criação do modelo Fruta, com um campo para nome, e realizamos as migrações para configurar o banco de dados. Criamos uma view para listar as frutas e outra para exibir o formulário de cadastro, utilizando forms.ModelForm para gerar o formulário automaticamente.
+
+As URLs foram configuradas para direcionar as requisições para as views de cadastro e listagem. Criamos o template HTML para exibir o formulário e as frutas cadastradas. Para melhorar a aparência, adicionamos um arquivo CSS e carregamos os arquivos estáticos usando {% load static %}.
+
+Esse exercício abordou a criação de um modelo simples em Django, migrações para persistir dados, views para exibir e cadastrar frutas, além de configurar URLs e usar ModelForm para formular o cadastro. Também aprendemos a carregar e estilizar a página com CSS, aprimorando a interface do usuário.
+
 40. Exercício Controle Financeiro com Google Sheets e Streamlit
 
 Objetivo: Desenvolver uma aplicação interativa de controle financeiro com Streamlit, integrada à API do Google Sheets para manipulação de dados. O projeto combina lógica de programação com aprendizado de como utilizar APIs e bibliotecas como Pandas e Plotly para análise de dados financeiros.
