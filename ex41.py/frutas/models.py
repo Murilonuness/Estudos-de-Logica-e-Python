@@ -2,6 +2,7 @@ from django.db import models
 
 class Fruta(models.Model):
     nome = models.CharField(max_length=100)
+    qtd = models.IntegerField()
 
     def __str__(self):
-        return self.nome
+        return f'{self.nome} ({self.qtd})'

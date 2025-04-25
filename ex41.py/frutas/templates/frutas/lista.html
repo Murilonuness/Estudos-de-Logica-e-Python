@@ -9,10 +9,18 @@
     <h1>Frutas cadastradas:</h1>
     <ul>
         {% for fruta in frutas %}
-            <li>{{ fruta.nome }}</li>
+            <li>{{ fruta.nome }} - Quantidade: {{ fruta.qtd }}</li>
         {% empty %}
             <li>Nenhuma fruta cadastrada.</li>
         {% endfor %}
     </ul>
+
+    <h2>Adicionar nova fruta</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="nome" placeholder="Nome da fruta" required>
+        <input type="number" name="qtd" placeholder="Quantidade" required>
+        <button type="submit">Adicionar</button>
+    </form>
 </body>
 </html>
