@@ -9,7 +9,13 @@
     <h1>Frutas cadastradas:</h1>
     <ul>
         {% for fruta in frutas %}
-            <li>{{ fruta.nome }} - Quantidade: {{ fruta.qtd }}</li>
+            <li>
+                <div class="fruta-info">{{ fruta.nome }} - Quantidade: {{ fruta.qtd }}</div>
+                <form action="{% url 'excluir_fruta' fruta.id %}" method="POST" class="form-excluir">
+                    {% csrf_token %}
+                    <button type="submit" class="botao-excluir">Excluir</button>
+                </form>
+            </li>
         {% empty %}
             <li>Nenhuma fruta cadastrada.</li>
         {% endfor %}

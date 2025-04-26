@@ -15,17 +15,21 @@ h1, h2 {
 }
 
 ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
-    margin: 0px 400px;
+    margin: 20px auto;
+    max-width: 500px;
 }
 
 li {
-    background-color: #fff;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 form {
@@ -59,4 +63,25 @@ form button {
 
 form button:hover {
     background-color: #4a494d;
+}
+
+.fruta-info {
+    font-size: 16px;
+}
+
+.form-excluir {
+    margin: 0;
+}
+
+.botao-excluir {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botao-excluir:hover {
+    background-color: #333;
 }
