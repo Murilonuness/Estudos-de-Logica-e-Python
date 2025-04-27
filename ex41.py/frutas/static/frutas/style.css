@@ -18,7 +18,7 @@ ul {
     list-style: none;
     padding: 0;
     margin: 20px auto;
-    max-width: 500px;
+    max-width: 600px;
 }
 
 li {
@@ -74,14 +74,15 @@ form button:hover {
 }
 
 .botao-excluir {
-    background-color: #555;
+    background-color: #5D5C61;
     color: white;
     border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
+    padding: 5px 10px;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .botao-excluir:hover {
-    background-color: #333;
+    background-color: #4a494d;
 }

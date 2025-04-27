@@ -8,24 +8,38 @@
 <body>
     <h1>Frutas cadastradas:</h1>
     <ul>
-        {% for fruta in frutas %}
-            <li>
-                <div class="fruta-info">{{ fruta.nome }} - Quantidade: {{ fruta.qtd }}</div>
-                <form action="{% url 'excluir_fruta' fruta.id %}" method="POST" class="form-excluir">
-                    {% csrf_token %}
-                    <button type="submit" class="botao-excluir">Excluir</button>
-                </form>
-            </li>
-        {% empty %}
+        {% if frutas %}
+            {% for fruta in frutas %}
+                <li>
+                    <div class="fruta-info">{{ fruta.nome }} - Quantidade: {{ fruta.qtd }}</div>
+
+                    {% if fruta.id %}
+                        <form action="{% url 'excluir_fruta' fruta.id %}" method="POST" class="form-excluir">
+                            {% csrf_token %}
+                            <button type="submit" class="botao-excluir">
+                                Remover 1 unidade
+                            </button>
+                        </form>
+                        <form action="{% url 'deletar_fruta' fruta.id %}" method="POST" class="form-excluir">
+                            {% csrf_token %}
+                            <button type="submit" class="botao-excluir">
+                                Deletar fruta
+                            </button>
+                        </form>
+                    {% endif %}
+
+                </li>
+            {% endfor %}
+        {% else %}
             <li>Nenhuma fruta cadastrada.</li>
-        {% endfor %}
+        {% endif %}
     </ul>
 
     <h2>Adicionar nova fruta</h2>
     <form method="POST">
         {% csrf_token %}
         <input type="text" name="nome" placeholder="Nome da fruta" required>
-        <input type="number" name="qtd" placeholder="Quantidade" required>
+        <input type="number" name="qtd" placeholder="Quantidade" required min="1">
         <button type="submit">Adicionar</button>
     </form>
 </body>
