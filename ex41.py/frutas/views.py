@@ -32,3 +32,14 @@ def deletar_fruta(request, fruta_id):
     fruta = get_object_or_404(Fruta, id=fruta_id)
     fruta.delete()
     return redirect('listar_frutas')
+
+def editar_fruta(request, fruta_id):
+    fruta = get_object_or_404(Fruta, id=fruta_id)
+
+    if request.method == 'POST':
+        fruta.nome = request.POST['nome']
+        fruta.qtd = int(request.POST['qtd'])
+        fruta.save()
+        return redirect('listar_frutas')
+
+    return render(request, 'frutas/editar.html', {'fruta': fruta})

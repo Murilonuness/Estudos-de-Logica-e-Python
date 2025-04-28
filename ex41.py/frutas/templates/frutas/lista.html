@@ -20,10 +20,17 @@
                                 Remover 1 unidade
                             </button>
                         </form>
+
                         <form action="{% url 'deletar_fruta' fruta.id %}" method="POST" class="form-excluir">
                             {% csrf_token %}
                             <button type="submit" class="botao-excluir">
                                 Deletar fruta
+                            </button>
+                        </form>
+
+                        <form action="{% url 'editar_fruta' fruta.id %}" method="GET" class="form-excluir">
+                            <button type="submit" class="botao-editar">
+                                Editar fruta
                             </button>
                         </form>
                     {% endif %}
