@@ -18,7 +18,7 @@ ul {
     list-style: none;
     padding: 0;
     margin: 20px auto;
-    max-width: 600px;
+    max-width: 750px;
 }
 
 li {
@@ -84,5 +84,39 @@ form button:hover {
 }
 
 .botao-excluir:hover {
+    background-color: #4a494d;
+}
+
+.container {
+    background-color: #fff;
+    margin: 30px 400px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.link-voltar {
+    background-color: #fff;
+    margin: 20px 400px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #5D5C61;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 97%;
+}
+
+a:hover {
     background-color: #4a494d;
 }
