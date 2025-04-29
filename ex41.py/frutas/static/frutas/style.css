@@ -104,6 +104,22 @@ form button:hover {
     text-align: center;
 }
 
+.botao-ordenar {
+    text-decoration: none;
+    background-color: #5D5C61;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 62%;
+}
+
+.botao-ordenar:hover {
+    background-color: #4a494d;
+}
+
 a {
     display: inline-block;
     text-decoration: none;

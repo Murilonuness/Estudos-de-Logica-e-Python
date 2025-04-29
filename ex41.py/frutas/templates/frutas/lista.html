@@ -7,6 +7,10 @@
 </head>
 <body>
     <h1>Frutas cadastradas:</h1>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="?ordenar_por=nome" class="botao-ordenar">Ordenar por nome</a>
+        <a href="?ordenar_por=quantidade" class="botao-ordenar">Ordenar por quantidade</a>
+    </div>    
     <ul>
         {% if frutas %}
             {% for fruta in frutas %}
