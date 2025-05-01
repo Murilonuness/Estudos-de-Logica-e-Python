@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RPG Web</title>
+    <link rel="stylesheet" href="{% static 'jogo/style.css' %}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'criar_personagem' %}">Criar Personagem</a></li>
+            <li><a href="{% url 'listar_personagens' %}">Ver Personagens</a></li>
+            <li><a href="#">Ações do Mestre (em breve)</a></li>
+            <li><a href="{% url 'desafio' %}">Desafio</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

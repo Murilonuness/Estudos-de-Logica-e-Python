@@ -3,6 +3,16 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+42. Jogo de Desafio com Personagens em Django
+
+Objetivo: Criar um sistema de cadastro de personagens e desafios, utilizando Django, com base nos atributos dos personagens.
+
+Descrição: O exercício consistiu na criação de um jogo onde o usuário pode cadastrar personagens e enfrentar desafios. Primeiro, criamos o modelo Personagem, com campos como força, carisma e inteligência. Após as migrações, configuramos o banco de dados para armazenar esses dados.
+
+Desenvolvemos três views principais: a primeira (criar_personagem) permite o cadastro de personagens utilizando o PersonagemForm, enquanto a segunda (listar_personagens) exibe todos os personagens cadastrados. A terceira (desafio) permite ao usuário escolher um personagem e realizar uma ação, como persuadir, atacar ou resolver, com base em atributos como força ou carisma. O sistema gera um dado aleatório, somado ao atributo escolhido, e verifica o sucesso da ação com um valor de sucesso mínimo de 15.
+
+As URLs foram configuradas para direcionar para cada view, e os templates HTML exibem os formulários de cadastro, lista de personagens e os resultados dos desafios. A implementação permite um jogo interativo, utilizando as funcionalidades do Django para criar e manipular dados com facilidade.
+
 41. Cadastro de Frutas em Django
 
 Objetivo: Criar um sistema de cadastro e exibição de frutas utilizando Django, integrando modelo, views, templates e estilização com CSS.

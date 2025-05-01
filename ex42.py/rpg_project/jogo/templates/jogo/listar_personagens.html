@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Personagens Cadastrados</h1>
+
+<ul>
+    {% for p in personagens %}
+        <li>{{ p.nome }} ({{ p.classe }})</li>
+    {% empty %}
+        <li>Nenhum personagem cadastrado.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'criar_personagem' %}">Criar novo</a>
+{% endblock %}

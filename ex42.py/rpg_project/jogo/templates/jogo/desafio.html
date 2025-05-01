@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Desafio RPG</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Escolha o personagem:</label>
+    <select name="personagem" required>
+        {% for p in personagens %}
+            <option value="{{ p.id }}">{{ p.nome }} ({{ p.classe }})</option>
+        {% endfor %}
+    </select>
+
+    <label>Ação:</label>
+    <select name="acao" required>
+        <option value="persuadir">Persuadir</option>
+        <option value="atacar">Atacar</option>
+        <option value="resolver">Resolver Enigma</option>
+    </select>
+
+    <button type="submit">Tentar!</button>
+</form>
+
+{% if resultado %}
+    <h2>Resultado:</h2>
+    <p><strong>{{ resultado.personagem.nome }}</strong> tentou <strong>{{ resultado.acao }}</strong>.</p>
+    <p>Rolagem: {{ resultado.dado }} + {{ resultado.atributo }} = {{ resultado.total }}</p>
+    {% if resultado.sucesso %}
+        <p style="color: green;">Sucesso!</p>
+    {% else %}
+        <p style="color: red;">Falha!</p>
+    {% endif %}
+{% endif %}
+{% endblock %}
