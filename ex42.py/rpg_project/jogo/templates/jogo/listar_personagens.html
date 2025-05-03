@@ -4,12 +4,16 @@
 <h1>Personagens Cadastrados</h1>
 
 <ul>
-    {% for p in personagens %}
-        <li>{{ p.nome }} ({{ p.classe }})</li>
+    {% for info in personagens_info %}
+        <li>
+            <strong>{{ info.personagem.nome }}</strong> ({{ info.personagem.classe }})<br>
+            XP necessário para o próximo nível: {{ info.xp_necessario }}<br>
+            Progresso: {{ info.progresso }}%
+        </li>
     {% empty %}
         <li>Nenhum personagem cadastrado.</li>
     {% endfor %}
 </ul>
 
-<a href="{% url 'criar_personagem' %}">Criar novo</a>
+<a href="{% url 'criar_personagem' %}">Criar novo personagem</a>
 {% endblock %}

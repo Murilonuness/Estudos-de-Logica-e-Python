@@ -15,7 +15,18 @@ def criar_personagem(request):
 
 def listar_personagens(request):
     personagens = Personagem.objects.all()
-    return render(request, 'jogo/listar_personagens.html', {'personagens': personagens})
+    
+    personagens_info = []
+    for p in personagens:
+        xp_necessario = (p.nivel + 1) * 100
+        progresso = (p.experiencia / xp_necessario) * 100 if xp_necessario > 0 else 0
+        personagens_info.append({
+            'personagem': p,
+            'xp_necessario': xp_necessario,
+            'progresso': round(progresso, 2)
+        })
+
+    return render(request, 'jogo/listar_personagens.html', {'personagens_info': personagens_info})
 
 def desafio(request):
     resultado = None
@@ -38,6 +49,10 @@ def desafio(request):
         total = dado + atributo
 
         sucesso = total >= 15
+
+        if sucesso:
+            personagem.ganhar_xp(50)
+
         resultado = {
             'personagem': personagem,
             'acao': acao,
