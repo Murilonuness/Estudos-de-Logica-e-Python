@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Editar Personagem</h1>
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Erro ao enviar o formulário!</strong> Corrija os campos abaixo.
+    </div>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar alterações</button>
+</form>
+
+<a href="{% url 'listar_personagens' %}">Voltar para a lista de personagens</a>
+
+{% endblock %}

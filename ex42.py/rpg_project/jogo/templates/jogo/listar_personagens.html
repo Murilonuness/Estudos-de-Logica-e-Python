@@ -9,6 +9,8 @@
             <strong>{{ info.personagem.nome }}</strong> ({{ info.personagem.classe }})<br>
             XP necessário para o próximo nível: {{ info.xp_necessario }}<br>
             Progresso: {{ info.progresso }}%
+            <br>
+            <a href="{% url 'editar_personagem' pk=info.personagem.pk %}">Editar</a>
         </li>
     {% empty %}
         <li>Nenhum personagem cadastrado.</li>

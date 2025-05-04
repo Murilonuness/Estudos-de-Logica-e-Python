@@ -13,6 +13,19 @@ def criar_personagem(request):
         form = PersonagemForm()
     return render(request, 'jogo/criar_personagem.html', {'form': form})
 
+def editar_personagem(request, pk):
+    personagem = Personagem.objects.get(pk=pk)
+    
+    if request.method == 'POST':
+        form = PersonagemForm(request.POST, instance=personagem)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_personagens')
+    else:
+        form = PersonagemForm(instance=personagem)
+    
+    return render(request, 'jogo/editar_personagem.html', {'form': form})
+
 def listar_personagens(request):
     personagens = Personagem.objects.all()
     
