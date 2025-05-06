@@ -18,4 +18,10 @@
 </ul>
 
 <a href="{% url 'criar_personagem' %}">Criar novo personagem</a>
+<br>
+<br>
+<form method="post" action="{% url 'resetar_xp' %}" style="margin: 0px; padding: 10px; max-width: 100%;">
+    {% csrf_token %}
+    <button type="submit">Resetar XP de todos os personagens</button>
+</form>
 {% endblock %}

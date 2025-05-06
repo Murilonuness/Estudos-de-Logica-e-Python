@@ -2,6 +2,7 @@ import random
 from django.shortcuts import render, redirect
 from .forms import PersonagemForm
 from .models import Personagem
+from django.contrib import messages
 
 def criar_personagem(request):
     if request.method == 'POST':
@@ -77,3 +78,12 @@ def desafio(request):
 
     personagens = Personagem.objects.all()
     return render(request, 'jogo/desafio.html', {'personagens': personagens, 'resultado': resultado})
+
+
+def resetar_xp(request):
+    personagens = Personagem.objects.all()
+    for personagem in personagens:
+        personagem.experiencia = 0
+        personagem.save()
+    messages.success(request, "Experiência de todos os personagens foi resetada com sucesso.")
+    return redirect('listar_personagens')
