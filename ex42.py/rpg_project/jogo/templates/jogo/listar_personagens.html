@@ -11,6 +11,10 @@
             Progresso: {{ info.progresso }}%
             <br>
             <a href="{% url 'editar_personagem' pk=info.personagem.pk %}">Editar</a>
+            <form method="post" action="{% url 'resetar_xp_personagem' pk=info.personagem.pk %}" style="display:inline; margin: 0px; padding: 10px; max-width: 100%;">
+                {% csrf_token %}
+                <button type="submit" style="margin-left: 10px;">Resetar XP</button>
+            </form>
         </li>
     {% empty %}
         <li>Nenhum personagem cadastrado.</li>

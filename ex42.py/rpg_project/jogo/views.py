@@ -1,8 +1,9 @@
 import random
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PersonagemForm
 from .models import Personagem
 from django.contrib import messages
+
 
 def criar_personagem(request):
     if request.method == 'POST':
@@ -86,4 +87,11 @@ def resetar_xp(request):
         personagem.experiencia = 0
         personagem.save()
     messages.success(request, "Experiência de todos os personagens foi resetada com sucesso.")
+    return redirect('listar_personagens')
+
+def resetar_xp_personagem(request, pk):
+    personagem = get_object_or_404(Personagem, pk=pk)
+    personagem.experiencia = 0
+    personagem.save()
+    messages.success(request, f"A experiência de {personagem.nome} foi resetada com sucesso.")
     return redirect('listar_personagens')
