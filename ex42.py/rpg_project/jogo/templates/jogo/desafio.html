@@ -3,33 +3,36 @@
 {% block content %}
 <h1>Desafio RPG</h1>
 
-<form method="POST">
+<form method="POST" class="form-desafio">
     {% csrf_token %}
-    <label>Escolha o personagem:</label>
-    <select name="personagem" required>
+    
+    <label for="personagem">Escolha o personagem:</label>
+    <select id="personagem" name="personagem" required>
         {% for p in personagens %}
             <option value="{{ p.id }}">{{ p.nome }} ({{ p.classe }})</option>
         {% endfor %}
     </select>
 
-    <label>Ação:</label>
-    <select name="acao" required>
-        <option value="persuadir">Persuadir</option>
-        <option value="atacar">Atacar</option>
-        <option value="resolver">Resolver Enigma</option>
+    <label for="acao">Escolha a ação:</label>
+    <select id="acao" name="acao" required>
+        {% for chave, acao in acoes_disponiveis.items %}
+            <option value="{{ chave }}">{{ acao.nome }}</option>
+        {% endfor %}
     </select>
 
     <button type="submit">Tentar!</button>
 </form>
 
 {% if resultado %}
-    <h2>Resultado:</h2>
-    <p><strong>{{ resultado.personagem.nome }}</strong> tentou <strong>{{ resultado.acao }}</strong>.</p>
-    <p>Rolagem: {{ resultado.dado }} + {{ resultado.atributo }} = {{ resultado.total }}</p>
-    {% if resultado.sucesso %}
-        <p style="color: green;">Sucesso!</p>
-    {% else %}
-        <p style="color: red;">Falha!</p>
-    {% endif %}
+    <div class="resultado">
+        <h2>Resultado:</h2>
+        <p><strong>{{ resultado.personagem.nome }}</strong> tentou <strong>{{ resultado.acao|capfirst }}</strong>.</p>
+        <p>Rolagem: {{ resultado.dado }} + {{ resultado.atributo }} = <strong>{{ resultado.total }}</strong></p>
+        {% if resultado.sucesso %}
+            <p style="color: green;"><strong>Sucesso!</strong> XP ganho: 50</p>
+        {% else %}
+            <p style="color: red;"><strong>Falha!</strong></p>
+        {% endif %}
+    </div>
 {% endif %}
 {% endblock %}

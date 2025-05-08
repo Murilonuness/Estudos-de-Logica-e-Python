@@ -45,20 +45,28 @@ def listar_personagens(request):
 
 def desafio(request):
     resultado = None
+
+    acoes_disponiveis = {
+        'persuadir': {'atributo': 'carisma', 'nome': 'Persuadir'},
+        'atacar': {'atributo': 'forca', 'nome': 'Atacar'},
+        'resolver': {'atributo': 'inteligencia', 'nome': 'Resolver Enigma'},
+        'esquivar': {'atributo': 'destreza', 'nome': 'Esquivar'},
+        'furtar': {'atributo': 'destreza', 'nome': 'Furtar'},
+        'perceber': {'atributo': 'sabedoria', 'nome': 'Perceber'},
+        'resistir': {'atributo': 'sabedoria', 'nome': 'Resistir'},
+        'suportar': {'atributo': 'constituicao', 'nome': 'Suportar Dor'},
+        'intimidar': {'atributo': 'carisma', 'nome': 'Intimidar'},
+        'investigar': {'atributo': 'inteligencia', 'nome': 'Investigar'},
+        'esmagar': {'atributo': 'forca', 'nome': 'Esmagar'}
+    }
+
     if request.method == 'POST':
         personagem_id = int(request.POST['personagem'])
         acao = request.POST['acao']
 
         personagem = Personagem.objects.get(id=personagem_id)
-
-        if acao == 'persuadir':
-            atributo = personagem.carisma
-        elif acao == 'atacar':
-            atributo = personagem.forca
-        elif acao == 'resolver':
-            atributo = personagem.inteligencia
-        else:
-            atributo = 0
+        atributo_nome = acoes_disponiveis.get(acao, {}).get('atributo')
+        atributo = getattr(personagem, atributo_nome, 0) if atributo_nome else 0
 
         dado = random.randint(1, 20)
         total = dado + atributo
@@ -78,8 +86,11 @@ def desafio(request):
         }
 
     personagens = Personagem.objects.all()
-    return render(request, 'jogo/desafio.html', {'personagens': personagens, 'resultado': resultado})
-
+    return render(request, 'jogo/desafio.html', {
+        'personagens': personagens,
+        'resultado': resultado,
+        'acoes_disponiveis': acoes_disponiveis
+    })
 
 def resetar_xp(request):
     personagens = Personagem.objects.all()
