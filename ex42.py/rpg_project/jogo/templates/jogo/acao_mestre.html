@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Ação do Mestre</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label for="personagem">Escolha o personagem:</label>
+    <select name="personagem" id="personagem" required>
+        {% for p in personagens %}
+            <option value="{{ p.id }}">{{ p.nome }} ({{ p.classe }})</option>
+        {% endfor %}
+    </select>
+
+    <label for="acao">Escolha a ação:</label>
+    <select name="acao" id="acao" required>
+        {% for chave, dados in acoes_disponiveis.items %}
+            <option value="{{ chave }}">{{ dados.nome }} ({{ dados.atributo|capfirst }})</option>
+        {% endfor %}
+    </select>
+
+    <label for="dificuldade">Dificuldade (padrão 15):</label>
+    <input type="number" name="dificuldade" id="dificuldade" value="15" min="1" required>
+
+    <button type="submit">Executar Ação</button>
+</form>
+
+{% if resultado %}
+    <hr>
+    <h2>Resultado da Ação</h2>
+    <p><strong>{{ resultado.personagem.nome }}</strong> tentou <strong>{{ resultado.nome_acao }}</strong>.</p>
+    <p>Rolagem: {{ resultado.dado }} + {{ resultado.atributo }} = {{ resultado.total }}</p>
+    <p>Dificuldade: {{ resultado.dificuldade }}</p>
+    {% if resultado.sucesso %}
+        <p style="color: green;">Sucesso! +50 XP concedido.</p>
+    {% else %}
+        <p style="color: red;">Falha. Nenhum XP ganho.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}

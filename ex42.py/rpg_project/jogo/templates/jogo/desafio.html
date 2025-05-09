@@ -5,7 +5,7 @@
 
 <form method="POST" class="form-desafio">
     {% csrf_token %}
-    
+
     <label for="personagem">Escolha o personagem:</label>
     <select id="personagem" name="personagem" required>
         {% for p in personagens %}
@@ -13,20 +13,22 @@
         {% endfor %}
     </select>
 
-    <label for="acao">Escolha a ação:</label>
-    <select id="acao" name="acao" required>
-        {% for chave, acao in acoes_disponiveis.items %}
-            <option value="{{ chave }}">{{ acao.nome }}</option>
+    <label for="desafio_id">Escolha o desafio:</label>
+    <select id="desafio_id" name="desafio_id" required>
+        {% for d in desafios %}
+            <option value="{{ d.id }}">{{ d.descricao }} [Ação: {{ d.acao }} | Dif: {{ d.dificuldade }}]</option>
         {% endfor %}
     </select>
 
-    <button type="submit">Tentar!</button>
+    <button type="submit">Tentar Resolver</button>
 </form>
 
 {% if resultado %}
     <div class="resultado">
         <h2>Resultado:</h2>
-        <p><strong>{{ resultado.personagem.nome }}</strong> tentou <strong>{{ resultado.acao|capfirst }}</strong>.</p>
+        <p><strong>{{ resultado.personagem.nome }}</strong> tentou resolver o desafio:</p>
+        <blockquote>{{ resultado.descricao }}</blockquote>
+        <p>Ação: <strong>{{ resultado.acao|capfirst }}</strong> — Dificuldade: {{ resultado.dificuldade }}</p>
         <p>Rolagem: {{ resultado.dado }} + {{ resultado.atributo }} = <strong>{{ resultado.total }}</strong></p>
         {% if resultado.sucesso %}
             <p style="color: green;"><strong>Sucesso!</strong> XP ganho: 50</p>

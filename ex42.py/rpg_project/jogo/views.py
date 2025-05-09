@@ -1,7 +1,7 @@
 import random
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PersonagemForm
-from .models import Personagem
+from .models import Personagem, DesafioCenario
 from django.contrib import messages
 
 
@@ -44,6 +44,60 @@ def listar_personagens(request):
     return render(request, 'jogo/listar_personagens.html', {'personagens_info': personagens_info})
 
 def desafio(request):
+    acoes_disponiveis = {
+        'força': {'atributo': 'forca'},
+        'inteligência': {'atributo': 'inteligencia'},
+        'carisma': {'atributo': 'carisma'},
+        'destreza': {'atributo': 'destreza'},
+    }
+
+    resultado = None
+    desafios = DesafioCenario.objects.filter(resolvido=False)
+    personagens = Personagem.objects.all()
+
+    if request.method == 'POST':
+        personagem_id = int(request.POST['personagem'])
+        desafio_id = int(request.POST['desafio_id'])
+
+        desafio = DesafioCenario.objects.get(id=desafio_id)
+        personagem = Personagem.objects.get(id=personagem_id)
+
+        acao = desafio.acao.lower()
+        atributo_nome = acoes_disponiveis.get(acao, {}).get('atributo')
+        atributo = getattr(personagem, atributo_nome, 0)
+
+        dado = random.randint(1, 20)
+        total = dado + atributo
+        sucesso = total >= desafio.dificuldade
+
+        if sucesso:
+            personagem.ganhar_xp(50)
+
+        desafio.resolvido = True
+        desafio.personagem_resolveu = personagem
+        desafio.sucesso = sucesso
+        desafio.dado = dado
+        desafio.total = total
+        desafio.save()
+
+        resultado = {
+            'personagem': personagem,
+            'acao': acao,
+            'dado': dado,
+            'atributo': atributo,
+            'total': total,
+            'sucesso': sucesso,
+            'descricao': desafio.descricao,
+            'dificuldade': desafio.dificuldade
+        }
+
+    return render(request, 'jogo/desafio.html', {
+        'personagens': personagens,
+        'desafios': desafios,
+        'resultado': resultado
+    })
+
+def acao_mestre(request):
     resultado = None
 
     acoes_disponiveis = {
@@ -63,15 +117,15 @@ def desafio(request):
     if request.method == 'POST':
         personagem_id = int(request.POST['personagem'])
         acao = request.POST['acao']
+        dificuldade = int(request.POST.get('dificuldade', 15))
 
-        personagem = Personagem.objects.get(id=personagem_id)
+        personagem = get_object_or_404(Personagem, pk=personagem_id)
         atributo_nome = acoes_disponiveis.get(acao, {}).get('atributo')
         atributo = getattr(personagem, atributo_nome, 0) if atributo_nome else 0
 
         dado = random.randint(1, 20)
         total = dado + atributo
-
-        sucesso = total >= 15
+        sucesso = total >= dificuldade
 
         if sucesso:
             personagem.ganhar_xp(50)
@@ -79,6 +133,8 @@ def desafio(request):
         resultado = {
             'personagem': personagem,
             'acao': acao,
+            'nome_acao': acoes_disponiveis.get(acao, {}).get('nome', 'Ação'),
+            'dificuldade': dificuldade,
             'dado': dado,
             'atributo': atributo,
             'total': total,
@@ -86,10 +142,10 @@ def desafio(request):
         }
 
     personagens = Personagem.objects.all()
-    return render(request, 'jogo/desafio.html', {
+    return render(request, 'jogo/acao_mestre.html', {
         'personagens': personagens,
-        'resultado': resultado,
-        'acoes_disponiveis': acoes_disponiveis
+        'acoes_disponiveis': acoes_disponiveis,
+        'resultado': resultado
     })
 
 def resetar_xp(request):
