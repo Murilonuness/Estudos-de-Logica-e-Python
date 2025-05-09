@@ -52,44 +52,59 @@ def desafio(request):
     }
 
     resultado = None
-    desafios = DesafioCenario.objects.filter(resolvido=False)
-    personagens = Personagem.objects.all()
+
 
     if request.method == 'POST':
-        personagem_id = int(request.POST['personagem'])
-        desafio_id = int(request.POST['desafio_id'])
+        if 'descricao' in request.POST and 'acao' in request.POST and 'dificuldade' in request.POST:
+            descricao = request.POST.get('descricao')
+            acao = request.POST.get('acao')
+            dificuldade = int(request.POST.get('dificuldade'))
 
-        desafio = DesafioCenario.objects.get(id=desafio_id)
-        personagem = Personagem.objects.get(id=personagem_id)
+            DesafioCenario.objects.create(
+                descricao=descricao,
+                acao=acao,
+                dificuldade=dificuldade
+            )
+            return redirect('desafio')
 
-        acao = desafio.acao.lower()
-        atributo_nome = acoes_disponiveis.get(acao, {}).get('atributo')
-        atributo = getattr(personagem, atributo_nome, 0)
+        elif 'personagem' in request.POST and 'desafio_id' in request.POST:
+            personagem_id = int(request.POST['personagem'])
+            desafio_id = int(request.POST['desafio_id'])
 
-        dado = random.randint(1, 20)
-        total = dado + atributo
-        sucesso = total >= desafio.dificuldade
+            desafio_obj = DesafioCenario.objects.get(id=desafio_id)
+            personagem = Personagem.objects.get(id=personagem_id)
 
-        if sucesso:
-            personagem.ganhar_xp(50)
+            acao = desafio_obj.acao.lower()
+            atributo_nome = acoes_disponiveis.get(acao, {}).get('atributo')
+            atributo = getattr(personagem, atributo_nome, 0)
 
-        desafio.resolvido = True
-        desafio.personagem_resolveu = personagem
-        desafio.sucesso = sucesso
-        desafio.dado = dado
-        desafio.total = total
-        desafio.save()
+            dado = random.randint(1, 20)
+            total = dado + atributo
+            sucesso = total >= desafio_obj.dificuldade
 
-        resultado = {
-            'personagem': personagem,
-            'acao': acao,
-            'dado': dado,
-            'atributo': atributo,
-            'total': total,
-            'sucesso': sucesso,
-            'descricao': desafio.descricao,
-            'dificuldade': desafio.dificuldade
-        }
+            if sucesso:
+                personagem.ganhar_xp(50)
+
+            desafio_obj.resolvido = True
+            desafio_obj.personagem_resolveu = personagem
+            desafio_obj.sucesso = sucesso
+            desafio_obj.dado = dado
+            desafio_obj.total = total
+            desafio_obj.save()
+
+            resultado = {
+                'personagem': personagem,
+                'acao': acao,
+                'dado': dado,
+                'atributo': atributo,
+                'total': total,
+                'sucesso': sucesso,
+                'descricao': desafio_obj.descricao,
+                'dificuldade': desafio_obj.dificuldade
+            }
+
+    personagens = Personagem.objects.all()
+    desafios = DesafioCenario.objects.filter(resolvido=False)
 
     return render(request, 'jogo/desafio.html', {
         'personagens': personagens,

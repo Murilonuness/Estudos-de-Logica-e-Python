@@ -1,10 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Desafio RPG</h1>
+<h1>Desafio RPG</h1> <br>
 
+<h2>Criar Novo Desafio</h2> <br>
+<form method="POST" class="form-criar">
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="criar">
+
+    <label for="descricao">Descrição:</label>
+    <input type="text" id="descricao" name="descricao" required>
+
+    <label for="acao">Ação necessária (força, inteligência, carisma, destreza):</label>
+    <input type="text" id="acao" name="acao" required>
+
+    <label for="dificuldade">Dificuldade (número de 1 a 20):</label>
+    <input type="number" id="dificuldade" name="dificuldade" min="1" max="20" required>
+
+    <button type="submit">Criar Desafio</button>
+</form>
+
+<br>
+
+<h2>Resolver Desafio</h2>
 <form method="POST" class="form-desafio">
     {% csrf_token %}
+    <input type="hidden" name="form_type" value="resolver">
 
     <label for="personagem">Escolha o personagem:</label>
     <select id="personagem" name="personagem" required>
