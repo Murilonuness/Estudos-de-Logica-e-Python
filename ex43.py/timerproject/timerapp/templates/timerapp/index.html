@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Timer</title>
+    <meta http-equiv="refresh" content="5" />
+    <style>
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            padding: 5vh 20px;
+        }
+        h1 {
+            font-size: 8em;
+            margin-bottom: 40px;
+            user-select: none;
+        }
+        form {
+            margin: 15px 0;
+        }
+        input[type="number"] {
+            font-size: 1.5em;
+            padding: 8px 12px;
+            width: 120px;
+            border-radius: 6px;
+            border: 2px solid #0f0;
+            background: #000;
+            color: #0f0;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input[type="number"]:focus {
+            border-color: #0c0;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 10px 30px;
+            margin-left: 10px;
+            background-color: #0f0;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0c0;
+        }
+
+        a.button-link {
+            display: inline-block;
+            margin-top: 30px;
+            text-decoration: none;
+        }
+        a.button-link button {
+            padding: 12px 40px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ minutes }}:{{ seconds }}</h1>
+
+    <form action="{% url 'start' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Iniciar</button>
+    </form>
+
+    <form action="{% url 'pause' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Pausar</button>
+    </form>
+
+    <form action="{% url 'edit' %}" method="post" style="margin-bottom: 30px;">
+        {% csrf_token %}
+        <input type="number" name="minutos" min="0" placeholder="Minutos" />
+        <button type="submit">Editar</button>
+    </form>
+
+    <a href="{% url 'fullscreen' %}" class="button-link">
+        <button type="button">Tela cheia</button>
+    </a>
+</body>
+</html>

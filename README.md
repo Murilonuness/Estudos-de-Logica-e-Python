@@ -3,6 +3,14 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+43. Temporizador com Atualização em Tempo Real (Django)
+
+Objetivo: Criar um temporizador funcional em Django que atualiza automaticamente a contagem regressiva e oferece controles como iniciar, pausar e editar o tempo.
+
+Descrição: Neste exercício, desenvolvemos um sistema de temporizador com contagem regressiva automática, utilizando sessões para armazenar o estado do timer. A lógica principal está na função get_remaining_time, que calcula o tempo restante com base no timestamp da última atualização (last_updated) e no tempo total salvo em seconds. Quando o botão "Iniciar" é clicado, a função start_timer define running = True, registra o tempo atual, e o sistema começa a descontar os segundos automaticamente. Já o botão "Editar" redefine o tempo com base na entrada do usuário e pausa o temporizador, enquanto o botão "Pausar" apenas congela o contador.
+
+O HTML utiliza <meta http-equiv="refresh" content="5"> para atualizar a página a cada 5 segundos, evitando recarregamentos excessivos durante edições. A interface também oferece uma versão em tela cheia, criando uma experiência mais imersiva. O projeto destaca o uso eficiente de sessões, controle de tempo com timezone, e integração entre frontend e backend no Django.
+
 42. Jogo de Desafio com Personagens em Django
 
 Objetivo: Criar um sistema de cadastro de personagens e desafios, utilizando Django, com base nos atributos dos personagens.
