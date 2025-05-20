@@ -3,6 +3,8 @@ Este é um resumo dos exercícios que foram realizados até agora, com uma expli
 
 Exercícios:
 
+44. Loading..
+
 43. Temporizador com Atualização em Tempo Real (Django)
 
 Objetivo: Criar um temporizador funcional em Django que atualiza automaticamente a contagem regressiva e oferece controles como iniciar, pausar e editar o tempo.
