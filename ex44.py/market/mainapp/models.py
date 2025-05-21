@@ -37,7 +37,6 @@ class Product(models.Model):
     slug=models.CharField(max_length=400)
     detail=models.TextField
     specs=models.TextField
-    price=models.PositiveIntegerField()
     markProduct=models.ForeignKey(Mark, on_delete=models.CASCADE)
     categoryProduct=models.ForeignKey(Category, on_delete=models.CASCADE)
     colorProduct=models.ForeignKey(Color, on_delete=models.CASCADE)
@@ -53,3 +52,6 @@ class ProductAttribute(models.Model):
     color = models.ForeignKey(Color,on_delete=models.CASCADE)
     size = models.ForeignKey(Size,on_delete=models.CASCADE)
     price=models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.product.title
